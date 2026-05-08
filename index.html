@@ -458,9 +458,11 @@ function initApp() {
   setSemanaRange();
   carregarConsultas();
   setupDrop();
-  db.channel('consultas_rt')
-    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'consultas' }, () => carregarConsultas())
-    .subscribe();
+  if (CONFIGURADO) {
+    db.channel('consultas_rt')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'consultas' }, () => carregarConsultas())
+      .subscribe();
+  }
 }
 
 function tick() {
@@ -480,7 +482,19 @@ function setSemanaRange() {
 }
 
 // ─── SUPABASE ─────────────────────────────────
+const CONFIGURADO = !SUPABASE_URL.includes('COLE_AQUI') && !SUPABASE_KEY.includes('COLE_AQUI');
+
 async function carregarConsultas() {
+  if (!CONFIGURADO) {
+    setSyncStatus('error');
+    document.getElementById('consult-list').innerHTML =
+      '<div class="empty" style="padding:24px 0;line-height:1.8">' +
+      '⚙️ Supabase não configurado ainda.<br>' +
+      '<span style="font-size:11px">Preencha SUPABASE_URL e SUPABASE_KEY no index.html</span>' +
+      '</div>';
+    document.getElementById('faltam-label').textContent = 'Configure o banco';
+    return;
+  }
   setSyncStatus('loading');
   const { inicio, terca } = semanaAtual();
   const { data, error } = await db
@@ -497,6 +511,7 @@ async function carregarConsultas() {
 }
 
 async function salvarConsulta(c) {
+  if (!CONFIGURADO) { showToast('Configure o Supabase primeiro'); throw new Error('não configurado'); }
   const { error } = await db.from('consultas').insert([c]);
   if (error) throw error;
 }
