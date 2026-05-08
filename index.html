@@ -10,271 +10,396 @@
 :root {
   --kv: #133A32; --ko: #DDB272; --kb: #641E20; --ks: #5A7570;
   --ko-light: #F8F0E3; --kv-light: #E8F0EE;
-  --bg: #f9f7f4; --surface: #ffffff;
-  --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text2: #666;
+  --bg: #f3f1ee; --surface: #ffffff;
+  --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text2: #777;
   --radius: 10px;
+  --topbar-h: 52px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* LOGIN */
-#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--kv); }
-.login-box { background: #0d0d0b; border-radius: 16px; padding: 36px 36px 32px; width: 340px; text-align: center; border: 1px solid rgba(221,178,114,.15); }
-.login-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--ko); }
-.login-sub { font-size: 13px; color: rgba(221,178,114,.5); margin-bottom: 24px; }
-.login-box input { width: 100%; padding: 10px 14px; border: 1px solid rgba(221,178,114,.25); border-radius: var(--radius); font-size: 15px; text-align: center; letter-spacing: 4px; margin-bottom: 12px; background: rgba(255,255,255,.05); color: var(--ko); outline: none; }
-.login-box input:focus { border-color: var(--ko); }
-.login-box input::placeholder { color: rgba(221,178,114,.3); letter-spacing: 2px; }
-.login-btn { width: 100%; padding: 11px; background: var(--kv); color: var(--ko); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .2s; }
-.login-btn:hover { opacity: .85; }
-.login-err { font-size: 12px; color: #e57373; margin-top: 8px; min-height: 16px; }
+/* ═══════════════ LOGIN ═══════════════ */
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #0d0d0b 0%, var(--kv) 100%); }
+.login-box { background: #0d0d0b; border-radius: 20px; padding: 40px 36px 36px; width: 340px; text-align: center; border: 1px solid rgba(221,178,114,.18); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.login-sub { font-size: 13px; color: rgba(221,178,114,.45); margin-bottom: 28px; letter-spacing: .5px; }
+.login-box input { width: 100%; padding: 12px 14px; border: 1px solid rgba(221,178,114,.2); border-radius: var(--radius); font-size: 16px; text-align: center; letter-spacing: 6px; margin-bottom: 12px; background: rgba(255,255,255,.04); color: var(--ko); outline: none; transition: border-color .2s; }
+.login-box input:focus { border-color: rgba(221,178,114,.6); }
+.login-box input::placeholder { color: rgba(221,178,114,.25); letter-spacing: 2px; }
+.login-btn { width: 100%; padding: 12px; background: var(--kv); color: var(--ko); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s; letter-spacing: .5px; }
+.login-btn:hover { opacity: .88; }
+.login-btn:active { transform: scale(.98); }
+.login-err { font-size: 12px; color: #e57373; margin-top: 10px; min-height: 16px; }
 
-/* APP */
-#app { display: none; max-width: 820px; margin: 0 auto; padding-bottom: 40px; }
+/* ═══════════════ APP SHELL ═══════════════ */
+#app { display: none; min-height: 100vh; flex-direction: column; }
 
-.topbar { background: var(--kv); color: var(--ko); padding: 10px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
-.mono { width: 34px; height: 34px; border: 1.5px solid var(--ko); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--ko); letter-spacing: 1px; }
-.app-title { font-size: 13px; font-weight: 600; color: var(--ko); letter-spacing: .5px; }
-.app-sub { font-size: 11px; color: rgba(221,178,114,.65); }
-.logout-btn { background: rgba(221,178,114,.15); border: 1px solid rgba(221,178,114,.3); color: var(--ko); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
-
-/* SYNC STATUS */
-.sync-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+/* ─── TOPBAR ─────────────────────────────── */
+.topbar {
+  background: var(--kv); color: var(--ko); height: var(--topbar-h);
+  padding: 0 20px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.app-title { font-size: 13px; font-weight: 600; color: var(--ko); letter-spacing: .4px; }
+.app-sub { font-size: 11px; color: rgba(221,178,114,.55); }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.week-pill { background: rgba(221,178,114,.1); border: 1px solid rgba(221,178,114,.2); border-radius: 20px; padding: 4px 12px; text-align: center; }
+.week-pill .wl { font-size: 9px; color: rgba(221,178,114,.5); text-transform: uppercase; letter-spacing: .8px; }
+.week-pill .wv { font-size: 12px; color: var(--ko); font-weight: 600; line-height: 1.2; }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; flex-shrink: 0; }
 .sync-ok { background: #4caf50; }
 .sync-err { background: #e53935; }
 .sync-loading { background: var(--ko); animation: blink 1s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+#sync-status { font-size: 11px; color: rgba(221,178,114,.65); display: flex; align-items: center; }
+.logout-btn { background: rgba(221,178,114,.12); border: 1px solid rgba(221,178,114,.25); color: var(--ko); border-radius: 6px; padding: 5px 12px; font-size: 11px; cursor: pointer; transition: background .15s; }
+.logout-btn:hover { background: rgba(221,178,114,.2); }
 
-/* HERO */
-.meta-hero { background: var(--kb); padding: 18px; position: relative; overflow: hidden; }
-.meta-hero::before { content: ''; position: absolute; top: 0; right: 0; width: 220px; height: 100%; border-radius: 50% 0 0 50%; background: rgba(221,178,114,.05); }
-.meta-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-.meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.55); margin-bottom: 4px; }
-.meta-count { font-size: 44px; font-weight: 600; color: var(--ko); line-height: 1; }
-.meta-total { font-size: 20px; color: rgba(221,178,114,.45); }
-.meta-deadline { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 4px; }
-.earn-box { background: rgba(221,178,114,.14); border: 1px solid rgba(221,178,114,.28); border-radius: var(--radius); padding: 10px 14px; text-align: right; }
-.earn-label { font-size: 10px; color: rgba(221,178,114,.65); text-transform: uppercase; letter-spacing: .5px; }
-.earn-val { font-size: 24px; font-weight: 600; color: var(--ko); }
-.earn-sub { font-size: 11px; color: rgba(221,178,114,.45); }
-.progress-meta { display: flex; justify-content: space-between; margin-bottom: 5px; }
-.progress-meta span { font-size: 11px; color: rgba(255,255,255,.45); }
-.progress-track { height: 6px; background: rgba(255,255,255,.12); border-radius: 3px; overflow: hidden; }
-.progress-fill { height: 100%; background: var(--ko); border-radius: 3px; transition: width .5s ease; }
-.dots-row { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
-.dot-m { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(221,178,114,.35); display: flex; align-items: center; justify-content: center; font-size: 9px; color: rgba(221,178,114,.4); }
-.dot-m.filled { background: var(--ko); border-color: var(--ko); color: var(--kb); }
+/* ═══════════════ DESKTOP GRID LAYOUT ═══════════════ */
+.main-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: calc(100vh - var(--topbar-h));
+}
 
-/* CARDS */
-.section { background: var(--surface); margin: 10px 10px 0; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
-.section-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-.section-head h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text2); font-weight: 600; }
+/* ─── LEFT SIDEBAR ─────────────────────── */
+.sidebar {
+  background: var(--kb);
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(221,178,114,.2); border-radius: 2px; }
+
+/* Meta section */
+.meta-block { padding: 24px 20px 20px; position: relative; overflow: hidden; }
+.meta-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(221,178,114,.05); pointer-events: none; }
+.meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,.45); margin-bottom: 8px; }
+.meta-number { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+.meta-count { font-size: 64px; font-weight: 700; color: var(--ko); line-height: 1; }
+.meta-total { font-size: 24px; color: rgba(221,178,114,.35); font-weight: 300; }
+.meta-deadline { font-size: 12px; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+
+.earn-box { background: rgba(221,178,114,.12); border: 1px solid rgba(221,178,114,.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; }
+.earn-label { font-size: 9px; color: rgba(221,178,114,.55); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+.earn-val { font-size: 28px; font-weight: 700; color: var(--ko); line-height: 1; }
+.earn-sub { font-size: 10px; color: rgba(221,178,114,.35); margin-top: 2px; }
+
+.progress-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.progress-meta span { font-size: 11px; color: rgba(255,255,255,.4); }
+.progress-track { height: 5px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; margin-bottom: 12px; }
+.progress-fill { height: 100%; background: var(--ko); border-radius: 3px; transition: width .6s ease; }
+.dots-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.dot-m { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(221,178,114,.25); display: flex; align-items: center; justify-content: center; font-size: 8px; color: rgba(221,178,114,.3); transition: all .2s; }
+.dot-m.filled { background: var(--ko); border-color: var(--ko); color: var(--kb); font-size: 9px; }
+
+/* Sidebar stats section */
+.sidebar-section { border-top: 1px solid rgba(255,255,255,.07); padding: 16px 20px; }
+.sidebar-section-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,.3); margin-bottom: 12px; font-weight: 600; }
+
+.src-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.sbn { font-size: 11px; color: rgba(255,255,255,.6); width: 90px; flex-shrink: 0; }
+.sbt { flex: 1; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; }
+.sbf { height: 100%; border-radius: 2px; transition: width .4s; }
+.sbv { font-size: 11px; color: rgba(221,178,114,.7); width: 16px; text-align: right; flex-shrink: 0; font-weight: 600; }
+
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.kpi-box { background: rgba(255,255,255,.06); border-radius: 8px; padding: 10px 8px; text-align: center; }
+.kpi-val { font-size: 15px; font-weight: 700; color: var(--ko); }
+.kpi-lbl { font-size: 9px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px; margin-top: 3px; line-height: 1.3; }
+
+.sidebar-footer { margin-top: auto; padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.06); font-size: 10px; color: rgba(255,255,255,.2); text-align: center; }
+
+/* ─── RIGHT MAIN CONTENT ─────────────────── */
+.main-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ─── CARD / SECTION ─────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.card-head h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text2); font-weight: 700; }
 .da { width: 6px; height: 6px; border-radius: 50%; background: var(--ko); flex-shrink: 0; }
 
-/* TABS */
-.tab-bar { display: flex; border-bottom: 1px solid var(--border); padding: 0 16px; }
-.tab { padding: 10px 14px; font-size: 12px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: all .15s; }
+/* ─── TABS ──────────────────────────────── */
+.tab-bar { display: flex; border-bottom: 1px solid var(--border); padding: 0 18px; }
+.tab { padding: 11px 14px; font-size: 12px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
 .tab.active { color: var(--kv); border-bottom-color: var(--kv); font-weight: 600; }
 
-/* FORM */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.fl { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
-.fi { width: 100%; padding: 8px 11px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--surface); color: var(--text); outline: none; transition: border-color .15s; }
-.fi:focus { border-color: var(--kv); }
+/* ─── FORM ──────────────────────────────── */
+.form-body { padding: 18px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.fl { font-size: 11px; color: var(--text2); display: block; margin-bottom: 5px; font-weight: 500; text-transform: uppercase; letter-spacing: .4px; }
+.fi { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border-color .15s, background .15s; }
+.fi:focus { border-color: var(--kv); background: var(--surface); }
 .source-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.pill { padding: 5px 11px; border: 1px solid var(--border); border-radius: 20px; font-size: 11px; cursor: pointer; color: var(--text2); background: var(--surface); transition: all .15s; }
+.pill { padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; cursor: pointer; color: var(--text2); background: var(--surface); transition: all .15s; }
+.pill:hover { border-color: var(--kv); color: var(--kv); }
 .pill.active { background: var(--kv); color: var(--ko); border-color: var(--kv); }
-.btn-g { width: 100%; padding: 10px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .2s; margin-top: 6px; }
-.btn-g:hover { opacity: .85; }
-.btn-g:disabled { opacity: .5; cursor: not-allowed; }
+.btn-g { width: 100%; padding: 12px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s; margin-top: 14px; letter-spacing: .3px; }
+.btn-g:hover { opacity: .88; }
+.btn-g:active { transform: scale(.99); }
+.btn-g:disabled { opacity: .45; cursor: not-allowed; }
 
-/* UPLOAD */
-.upload-zone { border: 1.5px dashed var(--border); border-radius: 10px; padding: 22px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
+/* ─── UPLOAD ──────────────────────────────── */
+.upload-zone { border: 1.5px dashed rgba(0,0,0,.12); border-radius: 10px; padding: 28px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
 .upload-zone:hover, .upload-zone.dragover { border-color: var(--ko); background: var(--ko-light); }
 .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload-icon { font-size: 28px; margin-bottom: 6px; }
-.upload-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.upload-sub { font-size: 11px; color: var(--text2); }
-.map-table { width: 100%; font-size: 12px; border-collapse: collapse; margin-top: 10px; }
-.map-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text2); padding: 5px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-.map-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
-.map-table select { padding: 3px 6px; font-size: 11px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--text); }
-.btn-sm { padding: 7px 14px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.btn-ghost { padding: 7px 14px; background: transparent; color: var(--text2); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; cursor: pointer; }
-.badge-hi { background: #e8f0f8; color: #1a5c9e; font-size: 10px; padding: 2px 7px; border-radius: 6px; display: inline-block; }
+.upload-icon { font-size: 32px; margin-bottom: 8px; }
+.upload-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.upload-sub { font-size: 12px; color: var(--text2); }
+.map-table { width: 100%; font-size: 12px; border-collapse: collapse; margin-top: 12px; }
+.map-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text2); padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; }
+.map-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.map-table select { padding: 4px 8px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); outline: none; }
+.btn-sm { padding: 8px 16px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.btn-ghost { padding: 8px 16px; background: transparent; color: var(--text2); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; cursor: pointer; }
+.badge-hi { background: #e8f0f8; color: #1a5c9e; font-size: 10px; padding: 3px 8px; border-radius: 6px; display: inline-block; font-weight: 600; }
 
-/* LIST */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; }
-.half { border-right: 1px solid var(--border); }
-.half:last-child { border-right: none; }
-.consult-list { max-height: 280px; overflow-y: auto; }
-.ci { padding: 9px 0; border-bottom: 1px solid var(--border); }
+/* ─── CONSULTA LIST ────────────────────── */
+.consult-list { max-height: 420px; overflow-y: auto; padding: 0 18px; }
+.consult-list::-webkit-scrollbar { width: 4px; }
+.consult-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.ci { padding: 12px 0; border-bottom: 1px solid var(--border); }
 .ci:last-child { border-bottom: none; }
-.ci-row { display: flex; align-items: flex-start; justify-content: space-between; }
-.ci-name { font-size: 13px; font-weight: 600; color: var(--text); }
-.ci-tel { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.ci-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.ci-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.ci-tel { font-size: 12px; color: var(--text2); margin-top: 2px; }
 .ci-proc { font-size: 11px; color: var(--text2); margin-top: 1px; }
-.csrc { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; display: inline-block; margin-top: 3px; }
+.csrc { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; display: inline-block; margin-top: 5px; }
 .src-instagram { background: #f0e8f8; color: #7b3fa0; }
 .src-indicacao { background: var(--kv-light); color: var(--kv); }
 .src-antiga { background: var(--ko-light); color: #8B5E2A; }
 .src-trafego { background: #E8F4FB; color: #1a6b9e; }
 .src-hidoctor { background: #e8f0f8; color: #1a5c9e; }
-.wa-btn { display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; background: #e8f5e9; color: #2e7d32; border-radius: 7px; font-size: 10px; text-decoration: none; margin-left: 4px; }
+.wa-btn { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; background: #e8f5e9; color: #2e7d32; border-radius: 7px; font-size: 10px; text-decoration: none; margin-left: 5px; font-weight: 600; }
 
-/* SRC BAR */
-.src-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
-.sbn { font-size: 11px; color: var(--text2); width: 85px; flex-shrink: 0; }
-.sbt { flex: 1; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
-.sbf { height: 100%; border-radius: 3px; transition: width .4s; }
-.sbv { font-size: 11px; color: var(--text2); width: 18px; text-align: right; flex-shrink: 0; }
+/* ─── CONSULTA LIST TWO-COL (inside main on desktop) ── */
+.list-src-grid { display: grid; grid-template-columns: 1fr 340px; gap: 0; }
+.list-col { }
+.list-col + .list-col { border-left: 1px solid var(--border); }
+.list-col-head { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.list-col-head h4 { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--text2); font-weight: 700; }
 
-/* KPI */
-.kpi-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 12px; }
-.kpi-box { background: var(--bg); border-radius: 8px; padding: 10px; text-align: center; }
-.kpi-val { font-size: 18px; font-weight: 600; color: var(--text); }
-.kpi-lbl { font-size: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+/* ─── EMPTY / LOADING ────────────────────── */
+.empty { text-align: center; color: var(--text2); font-size: 12px; padding: 32px 0; }
+.loading-row { text-align: center; padding: 24px; color: var(--text2); font-size: 12px; }
 
-/* TOAST */
-.toast { position: fixed; bottom: 20px; right: 20px; background: var(--kv); color: var(--ko); padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
-.toast.show { opacity: 1; }
-.empty { text-align: center; color: var(--text2); font-size: 12px; padding: 24px 0; }
-.loading-row { text-align: center; padding: 20px; color: var(--text2); font-size: 12px; }
+/* ─── TOAST ──────────────────────────────── */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--kv); color: var(--ko); padding: 11px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; z-index: 999; box-shadow: 0 6px 20px rgba(0,0,0,.2); transform: translateY(8px); }
+.toast.show { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 600px) {
+/* ═══════════════ TABLET (900–1023px) ═══════════════ */
+@media (max-width: 1023px) {
+  .main-layout { grid-template-columns: 260px 1fr; }
+  .meta-count { font-size: 52px; }
+}
+
+/* ═══════════════ MOBILE (<900px) ═══════════════ */
+@media (max-width: 899px) {
+  .main-layout { grid-template-columns: 1fr; }
+
+  /* Sidebar becomes top hero banner */
+  .sidebar {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .meta-block { padding: 20px 18px 16px; }
+  .meta-count { font-size: 48px; }
+
+  /* Right content fills screen */
+  .main-content { padding: 12px; gap: 12px; }
+
+  /* Form grid stacks */
   .form-grid { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; }
-  .half { border-right: none; border-bottom: 1px solid var(--border); }
-  .kpi-row { grid-template-columns: 1fr 1fr; }
-  .meta-count { font-size: 36px; }
+
+  /* List/src become stacked */
+  .list-src-grid { grid-template-columns: 1fr; }
+  .list-col + .list-col { border-left: none; border-top: 1px solid var(--border); }
+
+  /* Topbar compact */
+  .week-pill { display: none; }
+  #sync-status { display: none; }
+}
+
+@media (max-width: 480px) {
+  .meta-count { font-size: 40px; }
+  .earn-val { font-size: 22px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .sidebar-section { padding: 14px 16px; }
+  .meta-block { padding: 18px 16px 14px; }
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ─── LOGIN ───────────────────────────────── -->
 <div id="login-screen">
   <div class="login-box">
     <img src="./logo.png" alt="Clínica Kaísa Justo" style="width:200px;margin:0 auto 4px;display:block">
-    <div class="login-sub" style="margin-bottom:24px">Painel de Atendimento</div>
-    <input type="password" id="pwd-input" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-sub">Painel de Atendimento</div>
+    <input type="password" id="pwd-input" placeholder="••••••">
     <button class="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ─── APP ─────────────────────────────────── -->
 <div id="app">
+
+  <!-- TOPBAR -->
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="./logo.png" alt="Clínica Kaísa Justo" style="height:32px;mix-blend-mode:screen;flex-shrink:0">
+    <div class="topbar-left">
+      <img src="./logo.png" alt="Clínica Kaísa Justo" style="height:30px;mix-blend-mode:screen;flex-shrink:0">
       <div>
-        <div class="app-title">Atendimento</div>
+        <div class="app-title">Painel de Atendimento</div>
         <div class="app-sub" id="clk">--:--</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:12px">
-      <div style="text-align:right">
-        <div style="font-size:10px;color:rgba(221,178,114,.55);text-transform:uppercase;letter-spacing:.5px">Semana atual</div>
-        <div style="font-size:12px;color:var(--ko)" id="semana-range"></div>
+    <div class="topbar-right">
+      <div class="week-pill">
+        <div class="wl">Semana atual</div>
+        <div class="wv" id="semana-range">—</div>
       </div>
-      <div id="sync-status" style="font-size:11px;color:rgba(221,178,114,.7);display:flex;align-items:center">
-        <span class="sync-dot sync-loading"></span> conectando
-      </div>
+      <div id="sync-status"><span class="sync-dot sync-loading"></span> conectando</div>
       <button class="logout-btn" onclick="logout()">Sair</button>
     </div>
   </div>
 
-  <div class="meta-hero">
-    <div class="meta-row">
-      <div>
+  <!-- GRID -->
+  <div class="main-layout">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="meta-block">
         <div class="meta-label">Consultas fechadas esta semana</div>
-        <div style="display:flex;align-items:baseline;gap:6px">
+        <div class="meta-number">
           <span class="meta-count" id="count-display">0</span>
           <span class="meta-total">/12</span>
         </div>
         <div class="meta-deadline" id="deadline-text">Meta: toda terça-feira</div>
-      </div>
-      <div class="earn-box">
-        <div class="earn-label">Comissão acumulada</div>
-        <div class="earn-val" id="earn-display">R$ 0</div>
-        <div class="earn-sub">R$50 por consulta</div>
-      </div>
-    </div>
-    <div class="progress-meta">
-      <span id="pct-label">0% da meta</span>
-      <span id="faltam-label">Faltam 12</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    <div class="dots-row" id="dots-row"></div>
-  </div>
 
-  <div class="section">
-    <div class="tab-bar">
-      <div class="tab active" onclick="switchTab('manual',this)">Registrar manualmente</div>
-      <div class="tab" onclick="switchTab('import',this)">Importar HiDoctor</div>
-    </div>
+        <div class="earn-box">
+          <div class="earn-label">Comissão acumulada</div>
+          <div class="earn-val" id="earn-display">R$ 0</div>
+          <div class="earn-sub">R$50 por consulta</div>
+        </div>
 
-    <div id="tab-manual" style="padding:14px 16px">
-      <div class="form-grid">
-        <div><label class="fl">Nome da paciente</label><input class="fi" type="text" id="nome-input" placeholder="Ex: Ana Paula Santos"></div>
-        <div><label class="fl">Telefone / WhatsApp</label><input class="fi" type="tel" id="tel-input" placeholder="(00) 00000-0000"></div>
+        <div class="progress-meta">
+          <span id="pct-label">0% da meta</span>
+          <span id="faltam-label">Faltam 12</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <div class="dots-row" id="dots-row" style="margin-top:12px"></div>
       </div>
-      <div style="margin-bottom:12px">
-        <label class="fl">Origem do lead</label>
-        <div class="source-pills">
-          <span class="pill" data-src="instagram" onclick="selectSrc(this)">Instagram</span>
-          <span class="pill" data-src="indicacao" onclick="selectSrc(this)">Indicação</span>
-          <span class="pill" data-src="antiga" onclick="selectSrc(this)">Paciente antiga</span>
-          <span class="pill" data-src="trafego" onclick="selectSrc(this)">Tráfego pago</span>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Por origem</div>
+        <div id="src-bar"><div style="font-size:11px;color:rgba(255,255,255,.25)">Registre consultas para ver</div></div>
+      </div>
+
+      <div class="sidebar-section" id="kpi-section" style="display:none">
+        <div class="sidebar-section-title">Financeiro</div>
+        <div class="kpi-grid" id="kpi-row"></div>
+      </div>
+
+      <div class="sidebar-footer">Clínica Kaísa Justo · v1.1</div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="main-content">
+
+      <!-- FORM CARD -->
+      <div class="card">
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab('manual',this)">Registrar manualmente</div>
+          <div class="tab" onclick="switchTab('import',this)">Importar HiDoctor</div>
+        </div>
+
+        <div id="tab-manual" class="form-body">
+          <div class="form-grid">
+            <div>
+              <label class="fl">Nome da paciente</label>
+              <input class="fi" type="text" id="nome-input" placeholder="Ex: Ana Paula Santos">
+            </div>
+            <div>
+              <label class="fl">Telefone / WhatsApp</label>
+              <input class="fi" type="tel" id="tel-input" placeholder="(00) 00000-0000">
+            </div>
+          </div>
+          <div>
+            <label class="fl">Origem do lead</label>
+            <div class="source-pills">
+              <span class="pill" data-src="instagram" onclick="selectSrc(this)">Instagram</span>
+              <span class="pill" data-src="indicacao" onclick="selectSrc(this)">Indicação</span>
+              <span class="pill" data-src="antiga" onclick="selectSrc(this)">Paciente antiga</span>
+              <span class="pill" data-src="trafego" onclick="selectSrc(this)">Tráfego pago</span>
+            </div>
+          </div>
+          <button class="btn-g" id="btn-registrar" onclick="registrar()">+ Registrar consulta</button>
+        </div>
+
+        <div id="tab-import" style="display:none" class="form-body">
+          <div class="upload-zone" id="drop-zone">
+            <input type="file" id="file-input" accept=".csv,.xlsx,.xls" onchange="handleFile(this.files[0])">
+            <div class="upload-icon">📂</div>
+            <div class="upload-title">Arraste ou clique para subir o arquivo</div>
+            <div class="upload-sub">Aceita CSV ou XLSX exportado do HiDoctor</div>
+          </div>
+          <div id="map-section" style="display:none;margin-top:14px">
+            <div style="font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span class="badge-hi">HiDoctor</span>
+              <span id="file-name-label" style="color:var(--text)"></span>
+              <span style="color:var(--text2)" id="row-count-label"></span>
+            </div>
+            <table class="map-table">
+              <thead><tr><th>Coluna no arquivo</th><th>Usar como</th><th>Exemplo</th></tr></thead>
+              <tbody id="map-tbody"></tbody>
+            </table>
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button class="btn-sm" onclick="importar()">Importar consultas</button>
+              <button class="btn-ghost" onclick="cancelImport()">Cancelar</button>
+            </div>
+          </div>
         </div>
       </div>
-      <button class="btn-g" id="btn-registrar" onclick="registrar()">+ Registrar consulta</button>
-    </div>
 
-    <div id="tab-import" style="display:none;padding:14px 16px">
-      <div class="upload-zone" id="drop-zone">
-        <input type="file" id="file-input" accept=".csv,.xlsx,.xls" onchange="handleFile(this.files[0])">
-        <div class="upload-icon">📂</div>
-        <div class="upload-title">Arraste ou clique para subir o arquivo</div>
-        <div class="upload-sub">Aceita CSV ou XLSX exportado do HiDoctor</div>
-      </div>
-      <div id="map-section" style="display:none;margin-top:12px">
-        <div style="font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <span class="badge-hi">HiDoctor</span>
-          <span id="file-name-label"></span>
-          <span style="color:var(--text2)" id="row-count-label"></span>
-        </div>
-        <table class="map-table">
-          <thead><tr><th>Coluna no arquivo</th><th>Usar como</th><th>Exemplo</th></tr></thead>
-          <tbody id="map-tbody"></tbody>
-        </table>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn-sm" onclick="importar()">Importar consultas</button>
-          <button class="btn-ghost" onclick="cancelImport()">Cancelar</button>
+      <!-- LIST CARD -->
+      <div class="card">
+        <div class="list-src-grid">
+          <div class="list-col">
+            <div class="list-col-head"><span class="da"></span><h4>Consultas da semana</h4></div>
+            <div class="consult-list" id="consult-list">
+              <div class="loading-row">Carregando...</div>
+            </div>
+          </div>
+          <div class="list-col" id="src-col-desktop">
+            <div class="list-col-head"><span class="da"></span><h4>Detalhes por origem</h4></div>
+            <div style="padding:16px 18px">
+              <div id="src-bar-desktop"><div class="empty" style="padding:20px 0">—</div></div>
+              <div id="kpi-row-desktop" style="display:none;margin-top:14px" class="kpi-grid"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="section two-col">
-    <div class="half">
-      <div class="section-head"><span class="da"></span><h3>Consultas da semana</h3></div>
-      <div style="padding:12px 14px">
-        <div class="consult-list" id="consult-list"><div class="loading-row">Carregando...</div></div>
-      </div>
-    </div>
-    <div>
-      <div class="section-head"><span class="da"></span><h3>Por origem</h3></div>
-      <div style="padding:12px 14px">
-        <div id="src-bar"><div class="empty">—</div></div>
-        <div id="kpi-row" style="display:none" class="kpi-row"></div>
-      </div>
-    </div>
-  </div>
-
-  <div style="text-align:center;margin-top:20px;font-size:11px;color:#bbb">
-    Clínica Kaísa Justo · v1.0
+    </main>
   </div>
 </div>
 
@@ -312,7 +437,7 @@ function doLogin() {
   if (v === SENHA_APP) {
     sessionStorage.setItem('kj_auth', '1');
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+    document.getElementById('app').style.display = 'flex';
     initApp();
   } else {
     document.getElementById('login-err').textContent = 'Senha incorreta';
@@ -323,7 +448,7 @@ function logout() { sessionStorage.removeItem('kj_auth'); location.reload(); }
 document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 if (sessionStorage.getItem('kj_auth') === '1') {
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
+  document.getElementById('app').style.display = 'flex';
   initApp();
 }
 
@@ -333,7 +458,6 @@ function initApp() {
   setSemanaRange();
   carregarConsultas();
   setupDrop();
-  // tempo real: atualiza quando outra aba insere
   db.channel('consultas_rt')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'consultas' }, () => carregarConsultas())
     .subscribe();
@@ -366,25 +490,21 @@ async function carregarConsultas() {
     .lte('created_at', terca.toISOString())
     .order('created_at', { ascending: false });
 
-  if (error) {
-    setSyncStatus('error');
-    showToast('Erro ao carregar dados');
-    return;
-  }
+  if (error) { setSyncStatus('error'); showToast('Erro ao carregar dados'); return; }
   consultas = data || [];
   setSyncStatus('ok');
   updateUI();
 }
 
-async function salvarConsulta(consulta) {
-  const { error } = await db.from('consultas').insert([consulta]);
+async function salvarConsulta(c) {
+  const { error } = await db.from('consultas').insert([c]);
   if (error) throw error;
 }
 
-function setSyncStatus(status) {
+function setSyncStatus(s) {
   const el = document.getElementById('sync-status');
-  const msgs = { ok: ['sync-ok', 'sincronizado'], error: ['sync-err', 'offline'], loading: ['sync-loading', 'salvando'] };
-  const [cls, txt] = msgs[status] || msgs.ok;
+  const m = { ok: ['sync-ok','sincronizado'], error: ['sync-err','offline'], loading: ['sync-loading','salvando'] };
+  const [cls, txt] = m[s] || m.ok;
   el.innerHTML = `<span class="sync-dot ${cls}"></span> ${txt}`;
 }
 
@@ -394,10 +514,8 @@ async function registrar() {
   const tel  = document.getElementById('tel-input').value.trim();
   if (!nome) { showToast('Informe o nome da paciente'); return; }
   if (!srcSelecionada) { showToast('Selecione a origem do lead'); return; }
-
   const btn = document.getElementById('btn-registrar');
   btn.disabled = true; btn.textContent = 'Salvando...';
-
   try {
     await salvarConsulta({ nome, telefone: tel, origem: srcSelecionada });
     document.getElementById('nome-input').value = '';
@@ -487,7 +605,6 @@ async function importar() {
   const mapping = {};
   parsedHeaders.forEach((_,i) => { const v = document.getElementById('map-'+i).value; if (v !== 'ignorar') mapping[v] = i; });
   if (mapping.nome === undefined) { showToast('Mapeie pelo menos a coluna de nome'); return; }
-
   const STATUS_OK = ['confirmado','agendado','consulta','realizado','ok','sim'];
   const registros = parsedRows.filter(r => {
     if (mapping.status !== undefined) {
@@ -503,12 +620,9 @@ async function importar() {
     valor:        mapping.valor !== undefined ? parseFloat(String(r[mapping.valor]||'0').replace(/[^\d,.]/g,'').replace(',','.')) || null : null,
     importado:    true,
   })).filter(r => r.nome);
-
   if (!registros.length) { showToast('Nenhum registro válido encontrado'); return; }
-
   const { error } = await db.from('consultas').insert(registros);
   if (error) { showToast('Erro ao importar'); return; }
-
   document.getElementById('map-section').style.display = 'none';
   document.getElementById('file-input').value = '';
   parsedRows = []; parsedHeaders = [];
@@ -527,8 +641,8 @@ function cancelImport() {
 function switchTab(tab, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('tab-manual').style.display  = tab === 'manual' ? 'block' : 'none';
-  document.getElementById('tab-import').style.display  = tab === 'import' ? 'block' : 'none';
+  document.getElementById('tab-manual').style.display = tab === 'manual' ? 'block' : 'none';
+  document.getElementById('tab-import').style.display = tab === 'import' ? 'block' : 'none';
 }
 
 function selectSrc(el) {
@@ -544,8 +658,8 @@ function updateUI() {
   const pct = Math.round((n / META) * 100);
   document.getElementById('progress-fill').style.width = Math.min(pct, 100) + '%';
   document.getElementById('pct-label').textContent = pct + '% da meta';
-  document.getElementById('faltam-label').textContent = Math.max(0, META-n) === 0 ? 'Meta atingida! 🎯' : 'Faltam ' + Math.max(0, META-n);
-  buildDots(); renderList(); renderSrcBar(); renderKPIs();
+  document.getElementById('faltam-label').textContent = Math.max(0, META-n) === 0 ? 'Meta atingida! 🎯' : 'Faltam ' + (META-n);
+  buildDots(); renderList(); renderSrcBars(); renderKPIs();
 }
 
 function buildDots() {
@@ -558,7 +672,7 @@ function buildDots() {
   }
 }
 
-function srcLabel(s) { return { instagram:'Instagram', indicacao:'Indicação', antiga:'Paciente antiga', trafego:'Tráfego pago', hidoctor:'HiDoctor' }[s]||s; }
+function srcLabel(s) { return {instagram:'Instagram',indicacao:'Indicação',antiga:'Paciente antiga',trafego:'Tráfego pago',hidoctor:'HiDoctor'}[s]||s; }
 function srcCls(s) { return 'csrc src-'+s; }
 function formatTel(t) {
   const d = t.replace(/\D/g,'');
@@ -582,45 +696,63 @@ function renderList() {
         ${c.procedimento ? `<div class="ci-proc">${c.procedimento}</div>` : ''}
         <span class="${srcCls(c.origem||'')}">${srcLabel(c.origem||'')}</span>
       </div>
-      <div style="text-align:right;flex-shrink:0;padding-left:8px">
-        <div style="font-size:10px;color:var(--text2)">${dataFmt}</div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:11px;color:var(--text2)">${dataFmt}</div>
         ${c.valor ? `<div style="font-size:12px;color:var(--kv);font-weight:600;margin-top:2px">R$ ${Number(c.valor).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>` : ''}
-        <div style="font-size:13px;color:var(--kv);margin-top:2px">✓</div>
+        <div style="font-size:14px;color:var(--kv);margin-top:3px">✓</div>
       </div>
     </div></div>`;
   }).join('');
 }
 
-function renderSrcBar() {
-  const el = document.getElementById('src-bar');
-  if (!consultas.length) { el.innerHTML = '<div class="empty">Registre consultas para ver</div>'; return; }
+function buildSrcHtml(target) {
+  if (!consultas.length) return '<div style="font-size:11px;color:rgba(255,255,255,.25)">—</div>';
   const srcs = {};
   consultas.forEach(c => { const s = c.origem||'outro'; srcs[s] = (srcs[s]||0)+1; });
-  const cores = { instagram:'#7b3fa0', indicacao:'#133A32', antiga:'#DDB272', trafego:'#1a6b9e', hidoctor:'#2c5f8a', outro:'#888' };
+  const cores = { instagram:'#7b3fa0', indicacao:'#4CAF50', antiga:'#DDB272', trafego:'#1a6b9e', hidoctor:'#2c5f8a', outro:'#888' };
   const nomes = { instagram:'Instagram', indicacao:'Indicação', antiga:'Paciente antiga', trafego:'Tráfego', hidoctor:'HiDoctor', outro:'Outro' };
   const total = consultas.length;
-  el.innerHTML = Object.entries(srcs).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
+  const isSidebar = target === 'sidebar';
+  return Object.entries(srcs).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
     `<div class="src-bar-row">
-      <div class="sbn">${nomes[k]||k}</div>
-      <div class="sbt"><div class="sbf" style="width:${Math.round((v/total)*100)}%;background:${cores[k]||'#888'}"></div></div>
-      <div class="sbv">${v}</div>
+      <div class="sbn" style="${isSidebar ? '' : 'color:var(--text2)'}">${nomes[k]||k}</div>
+      <div class="sbt" style="${isSidebar ? '' : 'background:var(--bg)'}">
+        <div class="sbf" style="width:${Math.round((v/total)*100)}%;background:${cores[k]||'#888'}"></div>
+      </div>
+      <div class="sbv" style="${isSidebar ? '' : 'color:var(--text)'}">${v}</div>
     </div>`
   ).join('');
 }
 
+function renderSrcBars() {
+  document.getElementById('src-bar').innerHTML = buildSrcHtml('sidebar');
+  const desktop = document.getElementById('src-bar-desktop');
+  if (desktop) desktop.innerHTML = buildSrcHtml('desktop');
+}
+
 function renderKPIs() {
   const temValor = consultas.some(c => c.valor > 0);
-  const el = document.getElementById('kpi-row');
-  if (!temValor) { el.style.display = 'none'; return; }
-  el.style.display = 'grid';
+  const kpiSection = document.getElementById('kpi-section');
+  const kpiDesktop = document.getElementById('kpi-row-desktop');
+
+  if (!temValor) {
+    if (kpiSection) kpiSection.style.display = 'none';
+    if (kpiDesktop) kpiDesktop.style.display = 'none';
+    return;
+  }
+
   const total = consultas.reduce((a,c) => a+(Number(c.valor)||0), 0);
   const comValor = consultas.filter(c => c.valor > 0);
   const media = comValor.length ? total/comValor.length : 0;
   const importadas = consultas.filter(c => c.importado).length;
-  el.innerHTML = `
+
+  const kpiHtml = `
     <div class="kpi-box"><div class="kpi-val">R$ ${(total/1000).toFixed(0)}k</div><div class="kpi-lbl">Valor total</div></div>
     <div class="kpi-box"><div class="kpi-val">R$ ${(media/1000).toFixed(1)}k</div><div class="kpi-lbl">Ticket médio</div></div>
-    <div class="kpi-box"><div class="kpi-val">${importadas}</div><div class="kpi-lbl">Do HiDoctor</div></div>`;
+    <div class="kpi-box"><div class="kpi-val">${importadas}</div><div class="kpi-lbl">HiDoctor</div></div>`;
+
+  if (kpiSection) { kpiSection.style.display = 'block'; document.getElementById('kpi-row').innerHTML = kpiHtml; }
+  if (kpiDesktop) { kpiDesktop.style.display = 'grid'; kpiDesktop.innerHTML = kpiHtml; }
 }
 
 function showToast(msg) {
