@@ -504,7 +504,12 @@ async function carregarConsultas() {
     .lte('created_at', terca.toISOString())
     .order('created_at', { ascending: false });
 
-  if (error) { setSyncStatus('error'); showToast('Erro ao carregar dados'); return; }
+  if (error) {
+    setSyncStatus('error');
+    document.getElementById('consult-list').innerHTML =
+      '<div class="empty">⚠️ Erro ao conectar.<br><span style="font-size:11px">Verifique se rodou o SQL no Supabase</span></div>';
+    return;
+  }
   consultas = data || [];
   setSyncStatus('ok');
   updateUI();
