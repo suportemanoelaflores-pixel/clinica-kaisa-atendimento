@@ -9,401 +9,459 @@
 <style>
 :root {
   --kv: #133A32; --ko: #DDB272; --kb: #641E20; --ks: #5A7570;
-  --ko-light: #F8F0E3; --kv-light: #E8F0EE;
-  --bg: #f3f1ee; --surface: #ffffff;
-  --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text2: #777;
-  --radius: 10px;
-  --topbar-h: 52px;
+  --ko-light: #FBF4E8; --kv-light: #EAF0EE;
+  --bg: #F2F0EC; --surface: #fff;
+  --border: rgba(0,0,0,0.07); --text: #1C1C1C; --text2: #888;
+  --radius: 12px; --topbar-h: 54px;
+  --success: #2e7d32; --danger: #c0392b;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* ═══════════════ LOGIN ═══════════════ */
-#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #0d0d0b 0%, var(--kv) 100%); }
-.login-box { background: #0d0d0b; border-radius: 20px; padding: 40px 36px 36px; width: 340px; text-align: center; border: 1px solid rgba(221,178,114,.18); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
-.login-sub { font-size: 13px; color: rgba(221,178,114,.45); margin-bottom: 28px; letter-spacing: .5px; }
-.login-box input { width: 100%; padding: 12px 14px; border: 1px solid rgba(221,178,114,.2); border-radius: var(--radius); font-size: 16px; text-align: center; letter-spacing: 6px; margin-bottom: 12px; background: rgba(255,255,255,.04); color: var(--ko); outline: none; transition: border-color .2s; }
-.login-box input:focus { border-color: rgba(221,178,114,.6); }
-.login-box input::placeholder { color: rgba(221,178,114,.25); letter-spacing: 2px; }
-.login-btn { width: 100%; padding: 12px; background: var(--kv); color: var(--ko); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s; letter-spacing: .5px; }
-.login-btn:hover { opacity: .88; }
-.login-btn:active { transform: scale(.98); }
-.login-err { font-size: 12px; color: #e57373; margin-top: 10px; min-height: 16px; }
+/* ══════════ LOGIN ══════════ */
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at 60% 40%, #1e5244 0%, #0b1f1b 100%); }
+.login-box { background: #0f1a18; border-radius: 24px; padding: 44px 40px 40px; width: 360px; text-align: center; border: 1px solid rgba(221,178,114,.14); box-shadow: 0 32px 80px rgba(0,0,0,.6); }
+.login-sub { font-size: 13px; color: rgba(221,178,114,.4); margin-bottom: 32px; letter-spacing: .6px; }
+.login-input-wrap { position: relative; margin-bottom: 14px; }
+.login-input-wrap input { width: 100%; padding: 14px 16px; border: 1.5px solid rgba(221,178,114,.15); border-radius: 10px; font-size: 18px; text-align: center; letter-spacing: 8px; background: rgba(255,255,255,.04); color: var(--ko); outline: none; transition: border-color .2s, background .2s; }
+.login-input-wrap input:focus { border-color: rgba(221,178,114,.5); background: rgba(255,255,255,.06); }
+.login-input-wrap input::placeholder { color: rgba(221,178,114,.2); letter-spacing: 3px; font-size: 14px; }
+.login-btn { width: 100%; padding: 14px; background: var(--kv); color: var(--ko); border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; letter-spacing: .8px; text-transform: uppercase; }
+.login-btn:hover { background: #1a4d40; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(19,58,50,.4); }
+.login-btn:active { transform: translateY(0); }
+.login-err { font-size: 12px; color: #ef9a9a; margin-top: 12px; min-height: 18px; }
 
-/* ═══════════════ APP SHELL ═══════════════ */
+/* ══════════ APP ══════════ */
 #app { display: none; min-height: 100vh; flex-direction: column; }
 
-/* ─── TOPBAR ─────────────────────────────── */
-.topbar {
-  background: var(--kv); color: var(--ko); height: var(--topbar-h);
-  padding: 0 20px; display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,.2);
-}
+/* ─── TOPBAR ─── */
+.topbar { background: var(--kv); height: var(--topbar-h); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 0 rgba(0,0,0,.15), 0 4px 16px rgba(0,0,0,.2); }
 .topbar-left { display: flex; align-items: center; gap: 12px; }
-.app-title { font-size: 13px; font-weight: 600; color: var(--ko); letter-spacing: .4px; }
-.app-sub { font-size: 11px; color: rgba(221,178,114,.55); }
-.topbar-right { display: flex; align-items: center; gap: 14px; }
-.week-pill { background: rgba(221,178,114,.1); border: 1px solid rgba(221,178,114,.2); border-radius: 20px; padding: 4px 12px; text-align: center; }
-.week-pill .wl { font-size: 9px; color: rgba(221,178,114,.5); text-transform: uppercase; letter-spacing: .8px; }
-.week-pill .wv { font-size: 12px; color: var(--ko); font-weight: 600; line-height: 1.2; }
-.sync-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; flex-shrink: 0; }
-.sync-ok { background: #4caf50; }
-.sync-err { background: #e53935; }
-.sync-loading { background: var(--ko); animation: blink 1s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-#sync-status { font-size: 11px; color: rgba(221,178,114,.65); display: flex; align-items: center; }
-.logout-btn { background: rgba(221,178,114,.12); border: 1px solid rgba(221,178,114,.25); color: var(--ko); border-radius: 6px; padding: 5px 12px; font-size: 11px; cursor: pointer; transition: background .15s; }
-.logout-btn:hover { background: rgba(221,178,114,.2); }
+.topbar-brand { font-size: 14px; font-weight: 700; color: var(--ko); letter-spacing: .3px; }
+.topbar-clock { font-size: 11px; color: rgba(221,178,114,.45); font-variant-numeric: tabular-nums; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.week-badge { background: rgba(221,178,114,.1); border: 1px solid rgba(221,178,114,.18); border-radius: 20px; padding: 5px 14px; }
+.week-badge .wl { font-size: 9px; color: rgba(221,178,114,.45); text-transform: uppercase; letter-spacing: 1px; }
+.week-badge .wv { font-size: 12px; color: var(--ko); font-weight: 700; }
+.sync-chip { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(221,178,114,.55); }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.sync-ok { background: #66bb6a; }
+.sync-err { background: #ef5350; }
+.sync-loading { background: var(--ko); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+.btn-sair { background: rgba(221,178,114,.1); border: 1px solid rgba(221,178,114,.2); color: rgba(221,178,114,.8); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.btn-sair:hover { background: rgba(221,178,114,.18); color: var(--ko); }
 
-/* ═══════════════ DESKTOP GRID LAYOUT ═══════════════ */
-.main-layout {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  min-height: calc(100vh - var(--topbar-h));
-}
+/* ══════════ LAYOUT ══════════ */
+.main-layout { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - var(--topbar-h)); }
 
-/* ─── LEFT SIDEBAR ─────────────────────── */
-.sidebar {
-  background: var(--kb);
-  position: sticky;
-  top: var(--topbar-h);
-  height: calc(100vh - var(--topbar-h));
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.sidebar::-webkit-scrollbar { width: 4px; }
-.sidebar::-webkit-scrollbar-thumb { background: rgba(221,178,114,.2); border-radius: 2px; }
+/* ══════════ SIDEBAR ══════════ */
+.sidebar { background: var(--kb); position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow-y: auto; display: flex; flex-direction: column; scrollbar-width: none; }
+.sidebar::-webkit-scrollbar { display: none; }
 
-/* Meta section */
-.meta-block { padding: 24px 20px 20px; position: relative; overflow: hidden; }
-.meta-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(221,178,114,.05); pointer-events: none; }
-.meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,.45); margin-bottom: 8px; }
-.meta-number { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
-.meta-count { font-size: 64px; font-weight: 700; color: var(--ko); line-height: 1; }
-.meta-total { font-size: 24px; color: rgba(221,178,114,.35); font-weight: 300; }
-.meta-deadline { font-size: 12px; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+/* Meta block */
+.meta-block { padding: 28px 22px 22px; position: relative; overflow: hidden; }
+.meta-block::after { content: ''; position: absolute; bottom: -30px; right: -30px; width: 140px; height: 140px; border-radius: 50%; background: rgba(221,178,114,.06); pointer-events: none; }
+.meta-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; color: rgba(255,255,255,.35); margin-bottom: 10px; font-weight: 600; }
+.meta-number { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+.meta-big { font-size: 72px; font-weight: 800; color: var(--ko); line-height: .9; letter-spacing: -2px; font-variant-numeric: tabular-nums; }
+.meta-denom { font-size: 28px; color: rgba(221,178,114,.3); font-weight: 300; }
+.meta-msg { font-size: 12px; color: rgba(255,255,255,.45); margin-bottom: 20px; min-height: 16px; }
 
-.earn-box { background: rgba(221,178,114,.12); border: 1px solid rgba(221,178,114,.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; }
-.earn-label { font-size: 9px; color: rgba(221,178,114,.55); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
-.earn-val { font-size: 28px; font-weight: 700; color: var(--ko); line-height: 1; }
-.earn-sub { font-size: 10px; color: rgba(221,178,114,.35); margin-top: 2px; }
+/* Progress */
+.progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.progress-pct { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 600; }
+.progress-faltam { font-size: 11px; color: rgba(221,178,114,.6); font-weight: 600; }
+.progress-track { height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width .7s cubic-bezier(.4,0,.2,1); background: linear-gradient(90deg, #DDB272, #f5d49a); }
+.dots-grid { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 14px; }
+.dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; transition: all .25s; }
+.dot-empty { background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.1); color: transparent; }
+.dot-full { background: var(--ko); border: 1.5px solid rgba(255,255,255,.15); color: var(--kb); font-weight: 700; }
 
-.progress-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
-.progress-meta span { font-size: 11px; color: rgba(255,255,255,.4); }
-.progress-track { height: 5px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; margin-bottom: 12px; }
-.progress-fill { height: 100%; background: var(--ko); border-radius: 3px; transition: width .6s ease; }
-.dots-row { display: flex; gap: 5px; flex-wrap: wrap; }
-.dot-m { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(221,178,114,.25); display: flex; align-items: center; justify-content: center; font-size: 8px; color: rgba(221,178,114,.3); transition: all .2s; }
-.dot-m.filled { background: var(--ko); border-color: var(--ko); color: var(--kb); font-size: 9px; }
+/* Comissão */
+.comissao-box { margin: 0 22px 4px; background: rgba(0,0,0,.2); border: 1px solid rgba(221,178,114,.12); border-radius: 10px; padding: 14px 16px; }
+.comissao-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(221,178,114,.4); margin-bottom: 4px; font-weight: 600; }
+.comissao-val { font-size: 30px; font-weight: 800; color: var(--ko); letter-spacing: -1px; line-height: 1; }
+.comissao-sub { font-size: 10px; color: rgba(221,178,114,.3); margin-top: 3px; }
 
-/* Sidebar stats section */
-.sidebar-section { border-top: 1px solid rgba(255,255,255,.07); padding: 16px 20px; }
-.sidebar-section-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,.3); margin-bottom: 12px; font-weight: 600; }
+/* Sidebar sections */
+.sidebar-sep { height: 1px; background: rgba(255,255,255,.06); margin: 16px 0; }
+.sidebar-sect { padding: 0 22px 16px; }
+.sidebar-sect-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.4px; color: rgba(255,255,255,.25); font-weight: 700; margin-bottom: 12px; }
 
-.src-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.sbn { font-size: 11px; color: rgba(255,255,255,.6); width: 90px; flex-shrink: 0; }
-.sbt { flex: 1; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; }
-.sbf { height: 100%; border-radius: 2px; transition: width .4s; }
-.sbv { font-size: 11px; color: rgba(221,178,114,.7); width: 16px; text-align: right; flex-shrink: 0; font-weight: 600; }
+/* Source bars */
+.src-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.src-name { font-size: 11px; color: rgba(255,255,255,.55); width: 88px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.src-track { flex: 1; height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; }
+.src-bar { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.src-count { font-size: 11px; color: rgba(221,178,114,.7); width: 16px; text-align: right; flex-shrink: 0; font-weight: 700; }
 
-.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-.kpi-box { background: rgba(255,255,255,.06); border-radius: 8px; padding: 10px 8px; text-align: center; }
-.kpi-val { font-size: 15px; font-weight: 700; color: var(--ko); }
-.kpi-lbl { font-size: 9px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px; margin-top: 3px; line-height: 1.3; }
+/* KPIs */
+.kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.kpi { background: rgba(0,0,0,.18); border-radius: 8px; padding: 10px 8px; text-align: center; }
+.kpi-val { font-size: 14px; font-weight: 800; color: var(--ko); }
+.kpi-lbl { font-size: 9px; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .5px; margin-top: 3px; line-height: 1.3; }
 
-.sidebar-footer { margin-top: auto; padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.06); font-size: 10px; color: rgba(255,255,255,.2); text-align: center; }
+.sidebar-footer { margin-top: auto; padding: 14px 22px; border-top: 1px solid rgba(255,255,255,.05); font-size: 10px; color: rgba(255,255,255,.15); text-align: center; }
 
-/* ─── RIGHT MAIN CONTENT ─────────────────── */
-.main-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 0;
-}
+/* ══════════ MAIN CONTENT ══════════ */
+.main { padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
-/* ─── CARD / SECTION ─────────────────────── */
-.card {
-  background: var(--surface);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-.card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-.card-head h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text2); font-weight: 700; }
-.da { width: 6px; height: 6px; border-radius: 50%; background: var(--ko); flex-shrink: 0; }
+/* ─── CARD ─── */
+.card { background: var(--surface); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.card-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.card-head-left { display: flex; align-items: center; gap: 8px; }
+.card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: var(--text2); }
+.card-badge { width: 6px; height: 6px; border-radius: 50%; background: var(--ko); flex-shrink: 0; }
 
-/* ─── TABS ──────────────────────────────── */
-.tab-bar { display: flex; border-bottom: 1px solid var(--border); padding: 0 18px; }
-.tab { padding: 11px 14px; font-size: 12px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
-.tab.active { color: var(--kv); border-bottom-color: var(--kv); font-weight: 600; }
+/* ─── TABS ─── */
+.tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 20px; gap: 4px; }
+.tab { padding: 12px 16px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: all .15s; margin-bottom: -1px; }
+.tab:hover { color: var(--kv); }
+.tab.active { color: var(--kv); border-bottom-color: var(--kv); font-weight: 700; }
 
-/* ─── FORM ──────────────────────────────── */
-.form-body { padding: 18px; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.fl { font-size: 11px; color: var(--text2); display: block; margin-bottom: 5px; font-weight: 500; text-transform: uppercase; letter-spacing: .4px; }
-.fi { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border-color .15s, background .15s; }
-.fi:focus { border-color: var(--kv); background: var(--surface); }
-.source-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.pill { padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; cursor: pointer; color: var(--text2); background: var(--surface); transition: all .15s; }
-.pill:hover { border-color: var(--kv); color: var(--kv); }
-.pill.active { background: var(--kv); color: var(--ko); border-color: var(--kv); }
-.btn-g { width: 100%; padding: 12px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s; margin-top: 14px; letter-spacing: .3px; }
-.btn-g:hover { opacity: .88; }
-.btn-g:active { transform: scale(.99); }
-.btn-g:disabled { opacity: .45; cursor: not-allowed; }
+/* ─── FORM ─── */
+.form-body { padding: 20px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+.field input { padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border-color .15s, background .15s, box-shadow .15s; }
+.field input:focus { border-color: var(--kv); background: var(--surface); box-shadow: 0 0 0 3px rgba(19,58,50,.08); }
+.field input::placeholder { color: #c0bbb5; }
+.field-full { grid-column: 1/-1; }
 
-/* ─── UPLOAD ──────────────────────────────── */
-.upload-zone { border: 1.5px dashed rgba(0,0,0,.12); border-radius: 10px; padding: 28px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
-.upload-zone:hover, .upload-zone.dragover { border-color: var(--ko); background: var(--ko-light); }
-.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload-icon { font-size: 32px; margin-bottom: 8px; }
-.upload-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-.upload-sub { font-size: 12px; color: var(--text2); }
-.map-table { width: 100%; font-size: 12px; border-collapse: collapse; margin-top: 12px; }
-.map-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text2); padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; }
-.map-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
-.map-table select { padding: 4px 8px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); outline: none; }
-.btn-sm { padding: 8px 16px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+/* Source cards */
+.src-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+.src-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.src-card { border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; cursor: pointer; transition: all .18s; background: var(--surface); }
+.src-card:hover { border-color: var(--kv); background: var(--kv-light); }
+.src-card.active { border-color: var(--kv); background: var(--kv); color: var(--ko); }
+.src-card-icon { font-size: 20px; display: block; margin-bottom: 5px; line-height: 1; }
+.src-card-name { font-size: 11px; font-weight: 600; line-height: 1.2; color: var(--text2); }
+.src-card.active .src-card-name { color: var(--ko); }
+
+/* Submit */
+.btn-registrar { width: 100%; padding: 14px; background: var(--kv); color: var(--ko); border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 18px; letter-spacing: .4px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-registrar:hover:not(:disabled) { background: #1a4d40; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(19,58,50,.25); }
+.btn-registrar:active:not(:disabled) { transform: translateY(0); }
+.btn-registrar:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ─── UPLOAD / IMPORT ─── */
+.import-body { padding: 20px; }
+.import-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.import-hint { font-size: 12px; color: var(--text2); }
+.btn-limpar { font-size: 11px; color: var(--danger); border: 1px solid rgba(192,57,43,.2); background: rgba(192,57,43,.05); border-radius: 7px; padding: 5px 12px; cursor: pointer; transition: all .15s; }
+.btn-limpar:hover { background: rgba(192,57,43,.1); }
+.drop-zone { border: 1.5px dashed rgba(0,0,0,.12); border-radius: 12px; padding: 36px 24px; text-align: center; cursor: pointer; transition: all .2s; position: relative; background: var(--bg); }
+.drop-zone:hover, .drop-zone.dragover { border-color: var(--ko); background: var(--ko-light); }
+.drop-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.drop-icon { font-size: 36px; margin-bottom: 10px; }
+.drop-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.drop-sub { font-size: 12px; color: var(--text2); }
+
+/* Confirm limpar */
+.limpar-confirm { display: none; background: #fff5f5; border: 1px solid rgba(192,57,43,.2); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.limpar-confirm-text { font-size: 12px; color: #922; margin-bottom: 12px; line-height: 1.6; }
+.limpar-confirm-btns { display: flex; gap: 8px; }
+.btn-danger { padding: 8px 16px; background: var(--danger); color: #fff; border: none; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 .btn-ghost { padding: 8px 16px; background: transparent; color: var(--text2); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; cursor: pointer; }
-.badge-hi { background: #e8f0f8; color: #1a5c9e; font-size: 10px; padding: 3px 8px; border-radius: 6px; display: inline-block; font-weight: 600; }
 
-/* ─── CONSULTA LIST ────────────────────── */
-.consult-list { max-height: 420px; overflow-y: auto; padding: 0 18px; }
+/* Map table */
+.map-wrap { margin-top: 16px; }
+.map-info { font-size: 12px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.badge-hi { background: #e3ecf8; color: #1a5c9e; font-size: 10px; padding: 3px 9px; border-radius: 20px; font-weight: 700; }
+.map-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+.map-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text2); padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 700; }
+.map-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.map-table select { padding: 5px 8px; font-size: 11px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--text); outline: none; cursor: pointer; }
+.map-table select:focus { border-color: var(--kv); }
+.map-btns { display: flex; gap: 8px; margin-top: 14px; }
+.btn-import { padding: 10px 20px; background: var(--kv); color: var(--ko); border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+/* ─── LISTA ─── */
+.list-grid { display: grid; grid-template-columns: 1fr 300px; }
+.list-col { min-width: 0; }
+.list-col + .list-col { border-left: 1px solid var(--border); }
+.list-col-head { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.list-col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: var(--text2); }
+.list-count { font-size: 11px; color: var(--text2); background: var(--bg); border-radius: 10px; padding: 1px 8px; font-weight: 600; }
+
+.consult-list { max-height: 420px; overflow-y: auto; padding: 4px 0; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
 .consult-list::-webkit-scrollbar { width: 4px; }
 .consult-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-.ci { padding: 12px 0; border-bottom: 1px solid var(--border); }
+
+.ci { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; transition: background .12s; cursor: default; }
 .ci:last-child { border-bottom: none; }
-.ci-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.ci-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.ci-tel { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.ci-proc { font-size: 11px; color: var(--text2); margin-top: 1px; }
-.csrc { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; display: inline-block; margin-top: 5px; }
+.ci:hover { background: var(--bg); }
+.ci-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.ci-body { flex: 1; min-width: 0; }
+.ci-name { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+.ci-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.ci-tel { font-size: 11px; color: var(--text2); }
+.ci-proc { font-size: 11px; color: var(--text2); }
+.src-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; display: inline-block; }
 .src-instagram { background: #f0e8f8; color: #7b3fa0; }
-.src-indicacao { background: var(--kv-light); color: var(--kv); }
-.src-antiga { background: var(--ko-light); color: #8B5E2A; }
-.src-trafego { background: #E8F4FB; color: #1a6b9e; }
-.src-hidoctor { background: #e8f0f8; color: #1a5c9e; }
-.wa-btn { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; background: #e8f5e9; color: #2e7d32; border-radius: 7px; font-size: 10px; text-decoration: none; margin-left: 5px; font-weight: 600; }
+.src-indicacao  { background: #e8f5e9; color: #2e7d32; }
+.src-antiga     { background: var(--ko-light); color: #8B5E2A; }
+.src-trafego    { background: #E8F4FB; color: #1a6b9e; }
+.src-hidoctor   { background: #e3ecf8; color: #1a5c9e; }
+.ci-right { text-align: right; flex-shrink: 0; }
+.ci-time { font-size: 10px; color: var(--text2); margin-bottom: 2px; }
+.ci-valor { font-size: 12px; color: var(--kv); font-weight: 700; }
+.wa-link { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; background: #e8f5e9; color: #2e7d32; border-radius: 7px; font-size: 10px; text-decoration: none; font-weight: 700; }
 
-/* ─── CONSULTA LIST TWO-COL (inside main on desktop) ── */
-.list-src-grid { display: grid; grid-template-columns: 1fr 340px; gap: 0; }
-.list-col { }
-.list-col + .list-col { border-left: 1px solid var(--border); }
-.list-col-head { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-.list-col-head h4 { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--text2); font-weight: 700; }
+/* ─── EMPTY / LOADING ─── */
+.empty-state { padding: 40px 20px; text-align: center; }
+.empty-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-title { font-size: 14px; font-weight: 600; color: var(--text2); margin-bottom: 4px; }
+.empty-sub { font-size: 12px; color: #aaa; }
+.loading-state { padding: 28px 20px; text-align: center; color: var(--text2); font-size: 12px; }
 
-/* ─── EMPTY / LOADING ────────────────────── */
-.empty { text-align: center; color: var(--text2); font-size: 12px; padding: 32px 0; }
-.loading-row { text-align: center; padding: 24px; color: var(--text2); font-size: 12px; }
+/* ─── ORIGEM DETAIL COL ─── */
+.origen-col-body { padding: 16px 20px; }
+.src-detail-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.src-detail-name { font-size: 12px; color: var(--text2); width: 100px; flex-shrink: 0; }
+.src-detail-track { flex: 1; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.src-detail-fill { height: 100%; border-radius: 3px; transition: width .5s; }
+.src-detail-count { font-size: 12px; font-weight: 700; color: var(--text); width: 18px; text-align: right; flex-shrink: 0; }
+.kpi-row-desktop { display: none; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 14px; }
+.kpi-row-desktop.show { display: grid; }
+.kpi-card { background: var(--bg); border-radius: 10px; padding: 12px 10px; text-align: center; }
+.kpi-card-val { font-size: 16px; font-weight: 800; color: var(--text); }
+.kpi-card-lbl { font-size: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-top: 3px; }
 
-/* ─── TOAST ──────────────────────────────── */
-.toast { position: fixed; bottom: 24px; right: 24px; background: var(--kv); color: var(--ko); padding: 11px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; z-index: 999; box-shadow: 0 6px 20px rgba(0,0,0,.2); transform: translateY(8px); }
+/* ─── TOAST ─── */
+.toast { position: fixed; bottom: 28px; right: 28px; padding: 12px 20px; border-radius: 12px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; z-index: 9999; transform: translateY(10px); transition: all .3s cubic-bezier(.4,0,.2,1); box-shadow: 0 8px 28px rgba(0,0,0,.18); max-width: 320px; }
 .toast.show { opacity: 1; transform: translateY(0); }
+.toast-success { background: var(--kv); color: var(--ko); }
+.toast-error { background: #c0392b; color: #fff; }
 
-/* ═══════════════ TABLET (900–1023px) ═══════════════ */
+/* ─── FAB mobile ─── */
+.fab { display: none; position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--kv); border: none; border-radius: 50%; color: var(--ko); font-size: 26px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.25); z-index: 90; transition: all .2s; align-items: center; justify-content: center; }
+.fab:hover { transform: scale(1.08); }
+
+/* ══════════ RESPONSIVE ══════════ */
 @media (max-width: 1023px) {
-  .main-layout { grid-template-columns: 260px 1fr; }
-  .meta-count { font-size: 52px; }
+  .main-layout { grid-template-columns: 240px 1fr; }
+  .src-cards { grid-template-columns: repeat(2,1fr); }
 }
 
-/* ═══════════════ MOBILE (<900px) ═══════════════ */
 @media (max-width: 899px) {
   .main-layout { grid-template-columns: 1fr; }
-
-  /* Sidebar becomes top hero banner */
-  .sidebar {
-    position: static;
-    height: auto;
-    overflow: visible;
-  }
-  .meta-block { padding: 20px 18px 16px; }
-  .meta-count { font-size: 48px; }
-
-  /* Right content fills screen */
-  .main-content { padding: 12px; gap: 12px; }
-
-  /* Form grid stacks */
-  .form-grid { grid-template-columns: 1fr; }
-
-  /* List/src become stacked */
-  .list-src-grid { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  .meta-big { font-size: 56px; }
+  .main { padding: 12px; }
+  .field-row { grid-template-columns: 1fr; }
+  .src-cards { grid-template-columns: repeat(2,1fr); }
+  .list-grid { grid-template-columns: 1fr; }
   .list-col + .list-col { border-left: none; border-top: 1px solid var(--border); }
-
-  /* Topbar compact */
-  .week-pill { display: none; }
-  #sync-status { display: none; }
+  .week-badge { display: none; }
+  .sync-chip { display: none; }
+  .fab { display: flex; }
 }
 
 @media (max-width: 480px) {
-  .meta-count { font-size: 40px; }
-  .earn-val { font-size: 22px; }
-  .kpi-grid { grid-template-columns: 1fr 1fr; }
-  .sidebar-section { padding: 14px 16px; }
-  .meta-block { padding: 18px 16px 14px; }
+  .meta-big { font-size: 48px; }
+  .src-cards { grid-template-columns: repeat(4,1fr); }
+  .src-card-name { font-size: 10px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ─── LOGIN ───────────────────────────────── -->
+<!-- ══════════ LOGIN ══════════ -->
 <div id="login-screen">
   <div class="login-box">
-    <img src="./logo.png" alt="Clínica Kaísa Justo" style="width:200px;margin:0 auto 4px;display:block">
+    <img src="./logo.png" alt="Clínica Kaísa Justo" style="width:190px;margin:0 auto 6px;display:block">
     <div class="login-sub">Painel de Atendimento</div>
-    <input type="password" id="pwd-input" placeholder="••••••">
+    <div class="login-input-wrap">
+      <input type="password" id="pwd-input" placeholder="senha">
+    </div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
 
-<!-- ─── APP ─────────────────────────────────── -->
+<!-- ══════════ APP ══════════ -->
 <div id="app">
 
   <!-- TOPBAR -->
-  <div class="topbar">
+  <header class="topbar">
     <div class="topbar-left">
-      <img src="./logo.png" alt="Clínica Kaísa Justo" style="height:30px;mix-blend-mode:screen;flex-shrink:0">
+      <img src="./logo.png" alt="KJ" style="height:28px;mix-blend-mode:screen;flex-shrink:0">
       <div>
-        <div class="app-title">Painel de Atendimento</div>
-        <div class="app-sub" id="clk">--:--</div>
+        <div class="topbar-brand">Atendimento</div>
+        <div class="topbar-clock" id="clk">--:--:--</div>
       </div>
     </div>
     <div class="topbar-right">
-      <div class="week-pill">
+      <div class="week-badge">
         <div class="wl">Semana atual</div>
         <div class="wv" id="semana-range">—</div>
       </div>
-      <div id="sync-status"><span class="sync-dot sync-loading"></span> conectando</div>
-      <button class="logout-btn" onclick="logout()">Sair</button>
+      <div class="sync-chip" id="sync-status">
+        <span class="sync-dot sync-loading"></span>conectando
+      </div>
+      <button class="btn-sair" onclick="logout()">Sair</button>
     </div>
-  </div>
+  </header>
 
-  <!-- GRID -->
   <div class="main-layout">
 
-    <!-- ── SIDEBAR ── -->
+    <!-- ══ SIDEBAR ══ -->
     <aside class="sidebar">
       <div class="meta-block">
-        <div class="meta-label">Consultas fechadas esta semana</div>
+        <div class="meta-eyebrow">Consultas fechadas esta semana</div>
         <div class="meta-number">
-          <span class="meta-count" id="count-display">0</span>
-          <span class="meta-total">/12</span>
+          <span class="meta-big" id="count-display">0</span>
+          <span class="meta-denom">/12</span>
         </div>
-        <div class="meta-deadline" id="deadline-text">Meta: toda terça-feira</div>
-
-        <div class="earn-box">
-          <div class="earn-label">Comissão acumulada</div>
-          <div class="earn-val" id="earn-display">R$ 0</div>
-          <div class="earn-sub">R$50 por consulta</div>
+        <div class="meta-msg" id="meta-msg">Vamos lá! Registre a primeira.</div>
+        <div class="progress-row">
+          <span class="progress-pct" id="pct-label">0%</span>
+          <span class="progress-faltam" id="faltam-label">Faltam 12</span>
         </div>
-
-        <div class="progress-meta">
-          <span id="pct-label">0% da meta</span>
-          <span id="faltam-label">Faltam 12</span>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
         </div>
-        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-        <div class="dots-row" id="dots-row" style="margin-top:12px"></div>
+        <div class="dots-grid" id="dots-row"></div>
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">Por origem</div>
-        <div id="src-bar"><div style="font-size:11px;color:rgba(255,255,255,.25)">Registre consultas para ver</div></div>
+      <div class="comissao-box">
+        <div class="comissao-label">Comissão acumulada</div>
+        <div class="comissao-val" id="earn-display">R$ 0</div>
+        <div class="comissao-sub">R$ 50 por consulta fechada</div>
       </div>
 
-      <div class="sidebar-section" id="kpi-section" style="display:none">
-        <div class="sidebar-section-title">Financeiro</div>
-        <div class="kpi-grid" id="kpi-row"></div>
+      <div class="sidebar-sep"></div>
+
+      <div class="sidebar-sect">
+        <div class="sidebar-sect-title">Por origem</div>
+        <div id="src-bar-sidebar"><div style="font-size:11px;color:rgba(255,255,255,.2)">Nenhuma consulta ainda</div></div>
       </div>
 
-      <div class="sidebar-footer">Clínica Kaísa Justo · v1.1</div>
+      <div class="sidebar-sect" id="kpi-sect-sidebar" style="display:none">
+        <div class="sidebar-sep" style="margin:0 0 16px"></div>
+        <div class="sidebar-sect-title">Financeiro</div>
+        <div class="kpi-grid" id="kpi-sidebar"></div>
+      </div>
+
+      <div class="sidebar-footer" id="deadline-text">Meta: toda terça-feira · v1.2</div>
     </aside>
 
-    <!-- ── MAIN ── -->
-    <main class="main-content">
+    <!-- ══ MAIN ══ -->
+    <main class="main">
 
       <!-- FORM CARD -->
       <div class="card">
-        <div class="tab-bar">
-          <div class="tab active" onclick="switchTab('manual',this)">Registrar manualmente</div>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab('manual',this)">Registrar consulta</div>
           <div class="tab" onclick="switchTab('import',this)">Importar HiDoctor</div>
         </div>
 
+        <!-- ABA MANUAL -->
         <div id="tab-manual" class="form-body">
-          <div class="form-grid">
-            <div>
-              <label class="fl">Nome da paciente</label>
-              <input class="fi" type="text" id="nome-input" placeholder="Ex: Ana Paula Santos">
+          <div class="field-row">
+            <div class="field">
+              <label>Nome da paciente</label>
+              <input type="text" id="nome-input" placeholder="Ex: Ana Paula Santos" autocomplete="off">
             </div>
-            <div>
-              <label class="fl">Telefone / WhatsApp</label>
-              <input class="fi" type="tel" id="tel-input" placeholder="(00) 00000-0000">
+            <div class="field">
+              <label>Telefone / WhatsApp</label>
+              <input type="tel" id="tel-input" placeholder="(51) 99999-9999" oninput="fmtTel(this)">
             </div>
           </div>
+
           <div>
-            <label class="fl">Origem do lead</label>
-            <div class="source-pills">
-              <span class="pill" data-src="instagram" onclick="selectSrc(this)">Instagram</span>
-              <span class="pill" data-src="indicacao" onclick="selectSrc(this)">Indicação</span>
-              <span class="pill" data-src="antiga" onclick="selectSrc(this)">Paciente antiga</span>
-              <span class="pill" data-src="trafego" onclick="selectSrc(this)">Tráfego pago</span>
+            <div class="src-label">Origem do lead <span style="color:#ccc;font-weight:400;text-transform:none;letter-spacing:0">— obrigatório</span></div>
+            <div class="src-cards">
+              <div class="src-card" data-src="instagram" onclick="selectSrc(this)">
+                <span class="src-card-icon">📸</span>
+                <span class="src-card-name">Instagram</span>
+              </div>
+              <div class="src-card" data-src="indicacao" onclick="selectSrc(this)">
+                <span class="src-card-icon">🤝</span>
+                <span class="src-card-name">Indicação</span>
+              </div>
+              <div class="src-card" data-src="antiga" onclick="selectSrc(this)">
+                <span class="src-card-icon">💛</span>
+                <span class="src-card-name">Paciente antiga</span>
+              </div>
+              <div class="src-card" data-src="trafego" onclick="selectSrc(this)">
+                <span class="src-card-icon">📢</span>
+                <span class="src-card-name">Tráfego pago</span>
+              </div>
             </div>
           </div>
-          <button class="btn-g" id="btn-registrar" onclick="registrar()">+ Registrar consulta</button>
+
+          <button class="btn-registrar" id="btn-registrar" onclick="registrar()">
+            <span id="btn-icon">＋</span> Registrar consulta
+          </button>
         </div>
 
-        <div id="tab-import" style="display:none" class="form-body">
-          <div id="limpar-box" style="display:none;background:#fff5f5;border:1px solid #fcc;border-radius:8px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-            <div style="font-size:12px;color:#a33">⚠️ Isso apaga <strong>todas</strong> as consultas importadas do HiDoctor. Registros manuais não são afetados.</div>
-            <div style="display:flex;gap:8px;flex-shrink:0">
-              <button class="btn-sm" style="background:#c0392b" onclick="confirmarLimpar()">Apagar importações</button>
-              <button class="btn-ghost" onclick="document.getElementById('limpar-box').style.display='none'">Cancelar</button>
+        <!-- ABA IMPORT -->
+        <div id="tab-import" style="display:none" class="import-body">
+
+          <div class="limpar-confirm" id="limpar-confirm">
+            <div class="limpar-confirm-text">⚠️ Isso vai apagar <strong>todas</strong> as consultas importadas do HiDoctor. Registros manuais não são afetados.</div>
+            <div class="limpar-confirm-btns">
+              <button class="btn-danger" onclick="confirmarLimpar()">Apagar importações</button>
+              <button class="btn-ghost" onclick="fecharLimpar()">Cancelar</button>
             </div>
           </div>
-          <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
-            <button class="btn-ghost" style="font-size:11px;color:#c0392b;border-color:#fcc" onclick="document.getElementById('limpar-box').style.display='flex'">🗑 Limpar importações anteriores</button>
+
+          <div class="import-actions">
+            <span class="import-hint">Suba um arquivo .CSV ou .XLSX exportado do HiDoctor</span>
+            <button class="btn-limpar" onclick="abrirLimpar()">🗑 Limpar importações</button>
           </div>
-          <div class="upload-zone" id="drop-zone">
+
+          <div class="drop-zone" id="drop-zone">
             <input type="file" id="file-input" accept=".csv,.xlsx,.xls" onchange="handleFile(this.files[0])">
-            <div class="upload-icon">📂</div>
-            <div class="upload-title">Arraste ou clique para subir o arquivo</div>
-            <div class="upload-sub">Aceita CSV ou XLSX exportado do HiDoctor</div>
+            <div class="drop-icon">📂</div>
+            <div class="drop-title">Arraste o arquivo aqui ou clique para escolher</div>
+            <div class="drop-sub">Formatos aceitos: CSV, XLSX, XLS</div>
           </div>
-          <div id="map-section" style="display:none;margin-top:14px">
-            <div style="font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+
+          <div class="map-wrap" id="map-section" style="display:none">
+            <div class="map-info">
               <span class="badge-hi">HiDoctor</span>
-              <span id="file-name-label" style="color:var(--text)"></span>
+              <span id="file-name-label" style="color:var(--text);font-weight:600"></span>
               <span style="color:var(--text2)" id="row-count-label"></span>
             </div>
             <table class="map-table">
               <thead><tr><th>Coluna no arquivo</th><th>Usar como</th><th>Exemplo</th></tr></thead>
               <tbody id="map-tbody"></tbody>
             </table>
-            <div style="display:flex;gap:8px;margin-top:14px">
-              <button class="btn-sm" onclick="importar()">Importar consultas</button>
+            <div class="map-btns">
+              <button class="btn-import" onclick="importar()">Importar consultas</button>
               <button class="btn-ghost" onclick="cancelImport()">Cancelar</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- LIST CARD -->
+      <!-- LISTA CARD -->
       <div class="card">
-        <div class="list-src-grid">
+        <div class="list-grid">
           <div class="list-col">
-            <div class="list-col-head"><span class="da"></span><h4>Consultas da semana</h4></div>
+            <div class="list-col-head">
+              <span class="card-badge"></span>
+              <span class="list-col-title">Consultas da semana</span>
+              <span class="list-count" id="list-count">0</span>
+            </div>
             <div class="consult-list" id="consult-list">
-              <div class="loading-row">Carregando...</div>
+              <div class="loading-state">Carregando...</div>
             </div>
           </div>
-          <div class="list-col" id="src-col-desktop">
-            <div class="list-col-head"><span class="da"></span><h4>Detalhes por origem</h4></div>
-            <div style="padding:16px 18px">
-              <div id="src-bar-desktop"><div class="empty" style="padding:20px 0">—</div></div>
-              <div id="kpi-row-desktop" style="display:none;margin-top:14px" class="kpi-grid"></div>
+          <div class="list-col">
+            <div class="list-col-head">
+              <span class="card-badge"></span>
+              <span class="list-col-title">Por origem</span>
+            </div>
+            <div class="origen-col-body">
+              <div id="src-bar-desktop"><div class="empty-state" style="padding:20px 0"><div class="empty-sub">—</div></div></div>
+              <div class="kpi-row-desktop" id="kpi-desktop"></div>
             </div>
           </div>
         </div>
@@ -413,26 +471,36 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background
   </div>
 </div>
 
+<!-- FAB mobile -->
+<button class="fab" onclick="scrollToForm()" title="Registrar consulta">＋</button>
+
+<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ══════════════════════════════════════════════
-//  CONFIGURAÇÃO — preencha após criar o projeto
-// ══════════════════════════════════════════════
 const SUPABASE_URL  = 'https://adsdpwlztwjkaiwdnczb.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkc2Rwd2x6dHdqa2Fpd2RuY3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNTAzMjksImV4cCI6MjA5MzgyNjMyOX0.YOa-g6Ol7UDpPYgHjOGJH10pmYFjttOInLwtfLWZ0c0';
-const SENHA_APP     = 'kaisa2025';                // senha do painel (pode trocar)
+const SENHA_APP     = 'kaisa2025';
 // ══════════════════════════════════════════════
 
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
-
 const META = 12, COMISSAO = 50;
-let consultas = [];
-let srcSelecionada = '';
-let parsedRows = [], parsedHeaders = [];
+const CONFIGURADO = !SUPABASE_URL.includes('COLE_AQUI') && !SUPABASE_KEY.includes('COLE_AQUI');
 
-// ─── SEMANA ───────────────────────────────────
+let consultas = [], srcSelecionada = '', parsedRows = [], parsedHeaders = [];
+
+const SRC = {
+  instagram: { label: 'Instagram',      cor: '#7b3fa0', bg: '#f0e8f8' },
+  indicacao:  { label: 'Indicação',      cor: '#2e7d32', bg: '#e8f5e9' },
+  antiga:     { label: 'Paciente antiga',cor: '#8B5E2A', bg: '#FBF4E8' },
+  trafego:    { label: 'Tráfego pago',   cor: '#1a6b9e', bg: '#E8F4FB' },
+  hidoctor:   { label: 'HiDoctor',       cor: '#1a5c9e', bg: '#e3ecf8' },
+  outro:      { label: 'Outro',          cor: '#888',    bg: '#f0f0f0' },
+};
+
+// ─── SEMANA ───
 function semanaAtual() {
   const hoje = new Date(), dow = hoje.getDay();
   const diffTerca = dow <= 2 ? 2 - dow : 9 - dow;
@@ -441,28 +509,29 @@ function semanaAtual() {
   return { inicio, terca };
 }
 
-// ─── LOGIN ────────────────────────────────────
+// ─── LOGIN ───
 function doLogin() {
   const v = document.getElementById('pwd-input').value;
   if (v === SENHA_APP) {
-    sessionStorage.setItem('kj_auth', '1');
+    sessionStorage.setItem('kj_auth','1');
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
     initApp();
   } else {
     document.getElementById('login-err').textContent = 'Senha incorreta';
     document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
   }
 }
 function logout() { sessionStorage.removeItem('kj_auth'); location.reload(); }
-document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('pwd-input').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 if (sessionStorage.getItem('kj_auth') === '1') {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   initApp();
 }
 
-// ─── INIT ─────────────────────────────────────
+// ─── INIT ───
 function initApp() {
   tick(); setInterval(tick, 1000);
   setSemanaRange();
@@ -470,54 +539,43 @@ function initApp() {
   setupDrop();
   if (CONFIGURADO) {
     db.channel('consultas_rt')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'consultas' }, () => carregarConsultas())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'consultas' }, () => carregarConsultas())
       .subscribe();
   }
 }
 
 function tick() {
   document.getElementById('clk').textContent =
-    new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 
 function setSemanaRange() {
   const { inicio, terca } = semanaAtual();
-  const fmt = d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+  const fmt = d => d.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit'});
   document.getElementById('semana-range').textContent = fmt(inicio) + ' – ' + fmt(terca);
   const dias = Math.ceil((terca - new Date()) / 864e5);
   const el = document.getElementById('deadline-text');
-  if (dias === 0) el.textContent = 'Prazo: hoje é terça!';
-  else if (dias === 1) el.textContent = 'Prazo: amanhã é terça!';
-  else el.textContent = 'Prazo: ' + dias + ' dias para a terça';
+  if (dias === 0) el.textContent = 'Hoje é terça — último dia! · v1.2';
+  else if (dias === 1) el.textContent = 'Prazo: amanhã é terça! · v1.2';
+  else el.textContent = `Prazo: ${dias} dias para a terça · v1.2`;
 }
 
-// ─── SUPABASE ─────────────────────────────────
-const CONFIGURADO = !SUPABASE_URL.includes('COLE_AQUI') && !SUPABASE_KEY.includes('COLE_AQUI');
-
+// ─── SUPABASE ───
 async function carregarConsultas() {
   if (!CONFIGURADO) {
     setSyncStatus('error');
-    document.getElementById('consult-list').innerHTML =
-      '<div class="empty" style="padding:24px 0;line-height:1.8">' +
-      '⚙️ Supabase não configurado ainda.<br>' +
-      '<span style="font-size:11px">Preencha SUPABASE_URL e SUPABASE_KEY no index.html</span>' +
-      '</div>';
-    document.getElementById('faltam-label').textContent = 'Configure o banco';
+    showEmptyState('consult-list','⚙️','Supabase não configurado','Preencha as credenciais no index.html');
     return;
   }
   setSyncStatus('loading');
   const { inicio, terca } = semanaAtual();
-  const { data, error } = await db
-    .from('consultas')
-    .select('*')
+  const { data, error } = await db.from('consultas').select('*')
     .gte('created_at', inicio.toISOString())
     .lte('created_at', terca.toISOString())
     .order('created_at', { ascending: false });
-
   if (error) {
     setSyncStatus('error');
-    document.getElementById('consult-list').innerHTML =
-      '<div class="empty">⚠️ Erro ao conectar.<br><span style="font-size:11px">Verifique se rodou o SQL no Supabase</span></div>';
+    showEmptyState('consult-list','⚠️','Erro ao conectar','Verifique se rodou o SQL no Supabase');
     return;
   }
   consultas = data || [];
@@ -526,47 +584,63 @@ async function carregarConsultas() {
 }
 
 async function salvarConsulta(c) {
-  if (!CONFIGURADO) { showToast('Configure o Supabase primeiro'); throw new Error('não configurado'); }
+  if (!CONFIGURADO) throw new Error('não configurado');
   const { error } = await db.from('consultas').insert([c]);
   if (error) throw error;
 }
 
 function setSyncStatus(s) {
   const el = document.getElementById('sync-status');
-  const m = { ok: ['sync-ok','sincronizado'], error: ['sync-err','offline'], loading: ['sync-loading','salvando'] };
-  const [cls, txt] = m[s] || m.ok;
-  el.innerHTML = `<span class="sync-dot ${cls}"></span> ${txt}`;
+  const m = { ok:['sync-ok','sincronizado'], error:['sync-err','offline'], loading:['sync-loading','salvando'] };
+  const [cls,txt] = m[s]||m.ok;
+  el.innerHTML = `<span class="sync-dot ${cls}"></span>${txt}`;
 }
 
-// ─── REGISTRAR ────────────────────────────────
+// ─── REGISTRAR ───
 async function registrar() {
   const nome = document.getElementById('nome-input').value.trim();
   const tel  = document.getElementById('tel-input').value.trim();
-  if (!nome) { showToast('Informe o nome da paciente'); return; }
-  if (!srcSelecionada) { showToast('Selecione a origem do lead'); return; }
+  if (!nome) { showToast('Informe o nome da paciente','error'); return; }
+  if (!srcSelecionada) { showToast('Selecione a origem do lead','error'); return; }
   const btn = document.getElementById('btn-registrar');
-  btn.disabled = true; btn.textContent = 'Salvando...';
+  const icon = document.getElementById('btn-icon');
+  btn.disabled = true; icon.textContent = '⏳';
   try {
-    await salvarConsulta({ nome, telefone: tel, origem: srcSelecionada });
+    await salvarConsulta({ nome, telefone: tel||null, origem: srcSelecionada });
     document.getElementById('nome-input').value = '';
     document.getElementById('tel-input').value = '';
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.src-card').forEach(c => c.classList.remove('active'));
     srcSelecionada = '';
     await carregarConsultas();
-    showToast('Registrada! +R$50 — Total: R$' + Math.round(consultas.length * COMISSAO));
+    showToast('✓ Consulta registrada! +R$ 50','success');
+    document.getElementById('nome-input').focus();
   } catch(e) {
-    showToast('Erro ao salvar. Verifique a conexão.');
+    showToast('Erro ao salvar. Verifique a conexão.','error');
   } finally {
-    btn.disabled = false; btn.textContent = '+ Registrar consulta';
+    btn.disabled = false; icon.textContent = '＋';
   }
 }
 
-// ─── IMPORTAR ─────────────────────────────────
+function selectSrc(el) {
+  document.querySelectorAll('.src-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  srcSelecionada = el.dataset.src;
+}
+
+function fmtTel(el) {
+  let d = el.value.replace(/\D/g,'').slice(0,11);
+  if (d.length > 6) d = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  else if (d.length > 2) d = `(${d.slice(0,2)}) ${d.slice(2)}`;
+  else if (d.length) d = `(${d}`;
+  el.value = d;
+}
+
+// ─── IMPORT ───
 function setupDrop() {
   const dz = document.getElementById('drop-zone');
   dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
   dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
 }
 
 function handleFile(file) {
@@ -578,246 +652,287 @@ function handleFile(file) {
     let rows = [];
     if (ext === 'csv') rows = parseCSV(e.target.result);
     else {
-      const wb = XLSX.read(e.target.result, { type: 'array' });
-      rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header:1,defval:''});
     }
-    if (rows.length < 2) { showToast('Arquivo vazio ou inválido'); return; }
+    if (rows.length < 2) { showToast('Arquivo vazio ou inválido','error'); return; }
     parsedHeaders = rows[0].map(h => String(h).trim());
     parsedRows = rows.slice(1).filter(r => r.some(c => String(c).trim()));
-    document.getElementById('row-count-label').textContent = '(' + parsedRows.length + ' registros)';
+    document.getElementById('row-count-label').textContent = `(${parsedRows.length} registros)`;
     buildMapUI();
   };
-  if (ext === 'csv') reader.readAsText(file, 'UTF-8');
+  if (ext === 'csv') reader.readAsText(file,'UTF-8');
   else reader.readAsArrayBuffer(file);
 }
 
 function parseCSV(text) {
-  return text.split(/\r?\n/).filter(l => l.trim()).map(l => {
-    const cells = []; let cur = '', inQ = false;
-    for (let i = 0; i < l.length; i++) {
-      if (l[i] === '"') inQ = !inQ;
-      else if ((l[i] === ',' || l[i] === ';') && !inQ) { cells.push(cur.trim()); cur = ''; }
-      else cur += l[i];
+  return text.split(/\r?\n/).filter(l=>l.trim()).map(l=>{
+    const cells=[]; let cur='',inQ=false;
+    for(let i=0;i<l.length;i++){
+      if(l[i]==='"') inQ=!inQ;
+      else if((l[i]===','||l[i]===';')&&!inQ){cells.push(cur.trim());cur='';}
+      else cur+=l[i];
     }
     cells.push(cur.trim()); return cells;
   });
 }
 
 const FIELD_OPTIONS = [
-  { val: 'nome', label: 'Nome da paciente' }, { val: 'telefone', label: 'Telefone' },
-  { val: 'data', label: 'Data' }, { val: 'procedimento', label: 'Procedimento' },
-  { val: 'valor', label: 'Valor (R$)' }, { val: 'status', label: 'Status' },
-  { val: 'ignorar', label: '— Ignorar —' },
+  {val:'nome',label:'Nome da paciente'},{val:'telefone',label:'Telefone'},
+  {val:'data',label:'Data'},{val:'procedimento',label:'Procedimento'},
+  {val:'valor',label:'Valor (R$)'},{val:'status',label:'Status'},
+  {val:'ignorar',label:'— Ignorar —'},
 ];
 
 function guessField(h) {
   h = h.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  if (['nome','paciente','name','cliente'].some(x=>h.includes(x))) return 'nome';
-  if (['tel','fone','celular','whatsapp','phone'].some(x=>h.includes(x))) return 'telefone';
-  if (['data','date','dt'].some(x=>h.includes(x))) return 'data';
-  if (['proc','procedimento','servico','cirurgia'].some(x=>h.includes(x))) return 'procedimento';
-  if (['valor','preco','total','price'].some(x=>h.includes(x))) return 'valor';
-  if (['status','situacao'].some(x=>h.includes(x))) return 'status';
+  if(['nome','paciente','name','cliente'].some(x=>h.includes(x))) return 'nome';
+  if(['tel','fone','celular','whatsapp','phone'].some(x=>h.includes(x))) return 'telefone';
+  if(['data','date','dt'].some(x=>h.includes(x))) return 'data';
+  if(['proc','procedimento','servico','cirurgia'].some(x=>h.includes(x))) return 'procedimento';
+  if(['valor','preco','total','price'].some(x=>h.includes(x))) return 'valor';
+  if(['status','situacao'].some(x=>h.includes(x))) return 'status';
   return 'ignorar';
 }
 
 function buildMapUI() {
-  document.getElementById('map-tbody').innerHTML = parsedHeaders.map((h,i) => {
+  document.getElementById('map-tbody').innerHTML = parsedHeaders.map((h,i)=>{
     const guess = guessField(h);
-    const ex = parsedRows[0]?.[i] !== undefined ? String(parsedRows[0][i]).slice(0,28) : '—';
-    const opts = FIELD_OPTIONS.map(o => `<option value="${o.val}"${o.val===guess?' selected':''}>${o.label}</option>`).join('');
-    return `<tr><td style="font-weight:600">${h}</td><td><select id="map-${i}">${opts}</select></td><td style="color:var(--text2)">${ex}</td></tr>`;
+    const ex = parsedRows[0]?.[i]!==undefined ? String(parsedRows[0][i]).slice(0,28) : '—';
+    const opts = FIELD_OPTIONS.map(o=>`<option value="${o.val}"${o.val===guess?' selected':''}>${o.label}</option>`).join('');
+    return `<tr><td style="font-weight:600">${h}</td><td><select id="map-${i}">${opts}</select></td><td style="color:var(--text2);font-size:11px">${ex}</td></tr>`;
   }).join('');
   document.getElementById('map-section').style.display = 'block';
 }
 
 async function importar() {
   const mapping = {};
-  parsedHeaders.forEach((_,i) => { const v = document.getElementById('map-'+i).value; if (v !== 'ignorar') mapping[v] = i; });
-  if (mapping.nome === undefined) { showToast('Mapeie pelo menos a coluna de nome'); return; }
+  parsedHeaders.forEach((_,i)=>{ const v=document.getElementById('map-'+i).value; if(v!=='ignorar') mapping[v]=i; });
+  if(mapping.nome===undefined){ showToast('Mapeie pelo menos a coluna de nome','error'); return; }
   const STATUS_OK = ['confirmado','agendado','consulta','realizado','ok','sim'];
-  const registros = parsedRows.filter(r => {
-    if (mapping.status !== undefined) {
-      const s = String(r[mapping.status]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-      return STATUS_OK.some(x => s.includes(x));
+  const registros = parsedRows.filter(r=>{
+    if(mapping.status!==undefined){
+      const s=String(r[mapping.status]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+      return STATUS_OK.some(x=>s.includes(x));
     }
     return true;
-  }).map(r => {
-    // tenta usar a data real do arquivo
-    let created_at = undefined;
-    if (mapping.data !== undefined) {
-      const raw = String(r[mapping.data]||'').trim();
-      // formatos comuns: dd/mm/yyyy, yyyy-mm-dd, dd-mm-yyyy
-      let d = null;
-      const br = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-      if (br) {
-        const ano = br[3].length === 2 ? '20'+br[3] : br[3];
-        d = new Date(`${ano}-${br[2].padStart(2,'0')}-${br[1].padStart(2,'0')}T12:00:00`);
-      } else {
-        d = new Date(raw);
-      }
-      if (d && !isNaN(d)) created_at = d.toISOString();
+  }).map(r=>{
+    let created_at;
+    if(mapping.data!==undefined){
+      const raw=String(r[mapping.data]||'').trim();
+      const br=raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+      let d=null;
+      if(br){ const ano=br[3].length===2?'20'+br[3]:br[3]; d=new Date(`${ano}-${br[2].padStart(2,'0')}-${br[1].padStart(2,'0')}T12:00:00`); }
+      else d=new Date(raw);
+      if(d&&!isNaN(d)) created_at=d.toISOString();
     }
-    const obj = {
-      nome:         String(r[mapping.nome]||'').trim(),
-      telefone:     mapping.telefone !== undefined ? String(r[mapping.telefone]||'').trim() : null,
-      origem:       'hidoctor',
-      procedimento: mapping.procedimento !== undefined ? String(r[mapping.procedimento]||'').trim() : null,
-      valor:        mapping.valor !== undefined ? parseFloat(String(r[mapping.valor]||'0').replace(/[^\d,.]/g,'').replace(',','.')) || null : null,
-      importado:    true,
+    const obj={
+      nome:String(r[mapping.nome]||'').trim(),
+      telefone:mapping.telefone!==undefined?String(r[mapping.telefone]||'').trim()||null:null,
+      origem:'hidoctor',
+      procedimento:mapping.procedimento!==undefined?String(r[mapping.procedimento]||'').trim()||null:null,
+      valor:mapping.valor!==undefined?parseFloat(String(r[mapping.valor]||'0').replace(/[^\d,.]/g,'').replace(',','.'))||null:null,
+      importado:true,
     };
-    if (created_at) obj.created_at = created_at;
+    if(created_at) obj.created_at=created_at;
     return obj;
-  }).filter(r => r.nome);
-  if (!registros.length) { showToast('Nenhum registro válido encontrado'); return; }
-  const { error } = await db.from('consultas').insert(registros);
-  if (error) { showToast('Erro ao importar'); return; }
-  document.getElementById('map-section').style.display = 'none';
-  document.getElementById('file-input').value = '';
-  parsedRows = []; parsedHeaders = [];
+  }).filter(r=>r.nome);
+  if(!registros.length){ showToast('Nenhum registro válido encontrado','error'); return; }
+  const {error}=await db.from('consultas').insert(registros);
+  if(error){ showToast('Erro ao importar. Tente novamente.','error'); return; }
+  document.getElementById('map-section').style.display='none';
+  document.getElementById('file-input').value='';
+  parsedRows=[]; parsedHeaders=[];
   await carregarConsultas();
-  showToast(registros.length + ' consultas importadas do HiDoctor!');
-  switchTab('manual', document.querySelector('.tab'));
+  showToast(`${registros.length} consultas importadas do HiDoctor!`,'success');
+  switchTab('manual',document.querySelector('.tab'));
 }
 
 function cancelImport() {
-  document.getElementById('map-section').style.display = 'none';
-  document.getElementById('file-input').value = '';
-  parsedRows = []; parsedHeaders = [];
+  document.getElementById('map-section').style.display='none';
+  document.getElementById('file-input').value='';
+  parsedRows=[]; parsedHeaders=[];
 }
 
+function abrirLimpar() { document.getElementById('limpar-confirm').style.display='block'; }
+function fecharLimpar() { document.getElementById('limpar-confirm').style.display='none'; }
 async function confirmarLimpar() {
-  const btn = document.querySelector('#limpar-box .btn-sm');
-  btn.disabled = true; btn.textContent = 'Apagando...';
-  const { error } = await db.from('consultas').delete().eq('importado', true);
-  if (error) { showToast('Erro ao apagar. Tente novamente.'); btn.disabled = false; btn.textContent = 'Apagar importações'; return; }
-  document.getElementById('limpar-box').style.display = 'none';
+  const btn=document.querySelector('#limpar-confirm .btn-danger');
+  btn.disabled=true; btn.textContent='Apagando...';
+  const {error}=await db.from('consultas').delete().eq('importado',true);
+  if(error){ showToast('Erro ao apagar.','error'); btn.disabled=false; btn.textContent='Apagar importações'; return; }
+  fecharLimpar();
   await carregarConsultas();
-  showToast('Importações apagadas com sucesso!');
+  showToast('Importações apagadas!','success');
 }
 
-// ─── TABS / UI ────────────────────────────────
+// ─── UI ───
 function switchTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('tab-manual').style.display = tab === 'manual' ? 'block' : 'none';
-  document.getElementById('tab-import').style.display = tab === 'import' ? 'block' : 'none';
-}
-
-function selectSrc(el) {
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  srcSelecionada = el.dataset.src;
+  document.getElementById('tab-manual').style.display = tab==='manual'?'block':'none';
+  document.getElementById('tab-import').style.display = tab==='import'?'block':'none';
 }
 
 function updateUI() {
   const n = consultas.length;
   document.getElementById('count-display').textContent = n;
-  document.getElementById('earn-display').textContent = 'R$ ' + Math.round(n * COMISSAO).toLocaleString('pt-BR');
-  const pct = Math.round((n / META) * 100);
-  document.getElementById('progress-fill').style.width = Math.min(pct, 100) + '%';
-  document.getElementById('pct-label').textContent = pct + '% da meta';
-  document.getElementById('faltam-label').textContent = Math.max(0, META-n) === 0 ? 'Meta atingida! 🎯' : 'Faltam ' + (META-n);
-  buildDots(); renderList(); renderSrcBars(); renderKPIs();
+  document.getElementById('list-count').textContent = n;
+  document.getElementById('earn-display').textContent = 'R$ '+Math.round(n*COMISSAO).toLocaleString('pt-BR');
+  const pct = Math.min(Math.round((n/META)*100),100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('pct-label').textContent = pct+'%';
+  const faltam = Math.max(0,META-n);
+  document.getElementById('faltam-label').textContent = faltam===0?'Meta atingida 🎯':`Faltam ${faltam}`;
+  // Mensagem motivacional
+  const msgs = [
+    [0,0,'Vamos lá! Registre a primeira.'],
+    [1,3,'Bom começo! Continue assim.'],
+    [4,6,'Chegando na metade da meta!'],
+    [7,9,'Muito bem! Quase lá.'],
+    [10,11,'Incrível! Só mais um pouquinho!'],
+    [12,99,'🎉 Meta atingida! Semana perfeita!'],
+  ];
+  const msg = msgs.find(([a,b])=>n>=a&&n<=b);
+  document.getElementById('meta-msg').textContent = msg?msg[2]:'';
+  buildDots(); renderList(); renderSrc(); renderKPIs();
 }
 
 function buildDots() {
-  const row = document.getElementById('dots-row'); row.innerHTML = '';
-  for (let i = 0; i < META; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot-m' + (i < consultas.length ? ' filled' : '');
-    d.textContent = i < consultas.length ? '✓' : '';
+  const row=document.getElementById('dots-row'); row.innerHTML='';
+  for(let i=0;i<META;i++){
+    const d=document.createElement('div');
+    d.className='dot '+(i<consultas.length?'dot-full':'dot-empty');
+    d.textContent=i<consultas.length?'✓':'';
     row.appendChild(d);
   }
 }
 
-function srcLabel(s) { return {instagram:'Instagram',indicacao:'Indicação',antiga:'Paciente antiga',trafego:'Tráfego pago',hidoctor:'HiDoctor'}[s]||s; }
-function srcCls(s) { return 'csrc src-'+s; }
-function formatTel(t) {
-  const d = t.replace(/\D/g,'');
-  if (d.length===11) return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);
-  if (d.length===10) return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);
-  return t;
+function initials(nome) {
+  const parts=nome.trim().split(' ').filter(Boolean);
+  if(parts.length>=2) return parts[0][0].toUpperCase()+parts[1][0].toUpperCase();
+  return parts[0]?.[0]?.toUpperCase()||'?';
+}
+
+const AVATAR_COLORS = [
+  ['#e8f5e9','#2e7d32'],['#e3ecf8','#1a5c9e'],['#f0e8f8','#7b3fa0'],
+  ['#FBF4E8','#8B5E2A'],['#E8F4FB','#1a6b9e'],['#fce4ec','#c2185b'],
+];
+
+function timeAgo(iso) {
+  const diff = Date.now() - new Date(iso);
+  const m = Math.floor(diff/60000), h = Math.floor(m/60), d = Math.floor(h/24);
+  if(d>0) return d===1?'ontem':`${d}d atrás`;
+  if(h>0) return `${h}h atrás`;
+  if(m>0) return `${m}min`;
+  return 'agora';
 }
 
 function renderList() {
   const el = document.getElementById('consult-list');
-  if (!consultas.length) { el.innerHTML = '<div class="empty">Nenhuma consulta ainda</div>'; return; }
-  el.innerHTML = consultas.map(c => {
-    const tel = c.telefone ? formatTel(c.telefone) : '';
-    const waNum = c.telefone ? c.telefone.replace(/\D/g,'') : '';
-    const wa = waNum.length >= 10 ? 'https://wa.me/55'+waNum : '';
-    const dataFmt = c.created_at ? new Date(c.created_at).toLocaleDateString('pt-BR') : '';
-    return `<div class="ci"><div class="ci-row">
-      <div>
+  if(!consultas.length){
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Nenhuma consulta ainda</div><div class="empty-sub">Registre a primeira usando o formulário acima</div></div>`;
+    return;
+  }
+  el.innerHTML = consultas.map((c,i)=>{
+    const [bg,cor] = AVATAR_COLORS[i%AVATAR_COLORS.length];
+    const tel = c.telefone?fmtTelStr(c.telefone):'';
+    const waNum = c.telefone?c.telefone.replace(/\D/g,''):'';
+    const wa = waNum.length>=10?`https://wa.me/55${waNum}`:'';
+    const s = SRC[c.origem]||SRC.outro;
+    return `<div class="ci">
+      <div class="ci-avatar" style="background:${bg};color:${cor}">${initials(c.nome)}</div>
+      <div class="ci-body">
         <div class="ci-name">${c.nome}</div>
-        ${tel ? `<div class="ci-tel">${tel}${wa ? ` <a class="wa-btn" href="${wa}" target="_blank">WA</a>` : ''}</div>` : ''}
-        ${c.procedimento ? `<div class="ci-proc">${c.procedimento}</div>` : ''}
-        <span class="${srcCls(c.origem||'')}">${srcLabel(c.origem||'')}</span>
+        <div class="ci-meta">
+          ${tel?`<span class="ci-tel">${tel}</span>`:''}
+          ${wa?`<a class="wa-link" href="${wa}" target="_blank">WA</a>`:''}
+          ${c.procedimento?`<span class="ci-proc">· ${c.procedimento}</span>`:''}
+          <span class="src-badge src-${c.origem||'outro'}">${s.label}</span>
+        </div>
       </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:11px;color:var(--text2)">${dataFmt}</div>
-        ${c.valor ? `<div style="font-size:12px;color:var(--kv);font-weight:600;margin-top:2px">R$ ${Number(c.valor).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>` : ''}
-        <div style="font-size:14px;color:var(--kv);margin-top:3px">✓</div>
+      <div class="ci-right">
+        <div class="ci-time">${c.created_at?timeAgo(c.created_at):''}</div>
+        ${c.valor?`<div class="ci-valor">R$ ${Number(c.valor).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>`:''}
       </div>
-    </div></div>`;
+    </div>`;
   }).join('');
 }
 
-function buildSrcHtml(target) {
-  if (!consultas.length) return '<div style="font-size:11px;color:rgba(255,255,255,.25)">—</div>';
-  const srcs = {};
-  consultas.forEach(c => { const s = c.origem||'outro'; srcs[s] = (srcs[s]||0)+1; });
-  const cores = { instagram:'#7b3fa0', indicacao:'#4CAF50', antiga:'#DDB272', trafego:'#1a6b9e', hidoctor:'#2c5f8a', outro:'#888' };
-  const nomes = { instagram:'Instagram', indicacao:'Indicação', antiga:'Paciente antiga', trafego:'Tráfego', hidoctor:'HiDoctor', outro:'Outro' };
-  const total = consultas.length;
-  const isSidebar = target === 'sidebar';
-  return Object.entries(srcs).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
-    `<div class="src-bar-row">
-      <div class="sbn" style="${isSidebar ? '' : 'color:var(--text2)'}">${nomes[k]||k}</div>
-      <div class="sbt" style="${isSidebar ? '' : 'background:var(--bg)'}">
-        <div class="sbf" style="width:${Math.round((v/total)*100)}%;background:${cores[k]||'#888'}"></div>
-      </div>
-      <div class="sbv" style="${isSidebar ? '' : 'color:var(--text)'}">${v}</div>
-    </div>`
-  ).join('');
+function fmtTelStr(t) {
+  const d=t.replace(/\D/g,'');
+  if(d.length===11) return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  if(d.length===10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return t;
 }
 
-function renderSrcBars() {
-  document.getElementById('src-bar').innerHTML = buildSrcHtml('sidebar');
-  const desktop = document.getElementById('src-bar-desktop');
-  if (desktop) desktop.innerHTML = buildSrcHtml('desktop');
+function renderSrc() {
+  if(!consultas.length){
+    document.getElementById('src-bar-sidebar').innerHTML='<div style="font-size:11px;color:rgba(255,255,255,.2)">Nenhuma consulta ainda</div>';
+    document.getElementById('src-bar-desktop').innerHTML='<div class="empty-state" style="padding:20px 0"><div class="empty-sub">—</div></div>';
+    return;
+  }
+  const counts={};
+  consultas.forEach(c=>{ const s=c.origem||'outro'; counts[s]=(counts[s]||0)+1; });
+  const total=consultas.length;
+  const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+
+  // sidebar
+  document.getElementById('src-bar-sidebar').innerHTML=entries.map(([k,v])=>{
+    const s=SRC[k]||SRC.outro;
+    return `<div class="src-row">
+      <div class="src-name">${s.label}</div>
+      <div class="src-track"><div class="src-bar" style="width:${Math.round(v/total*100)}%;background:${s.cor}"></div></div>
+      <div class="src-count">${v}</div>
+    </div>`;
+  }).join('');
+
+  // desktop
+  document.getElementById('src-bar-desktop').innerHTML=entries.map(([k,v])=>{
+    const s=SRC[k]||SRC.outro;
+    return `<div class="src-detail-row">
+      <div class="src-detail-name">${s.label}</div>
+      <div class="src-detail-track"><div class="src-detail-fill" style="width:${Math.round(v/total*100)}%;background:${s.cor}"></div></div>
+      <div class="src-detail-count">${v}</div>
+    </div>`;
+  }).join('');
 }
 
 function renderKPIs() {
-  const temValor = consultas.some(c => c.valor > 0);
-  const kpiSection = document.getElementById('kpi-section');
-  const kpiDesktop = document.getElementById('kpi-row-desktop');
-
-  if (!temValor) {
-    if (kpiSection) kpiSection.style.display = 'none';
-    if (kpiDesktop) kpiDesktop.style.display = 'none';
-    return;
-  }
-
-  const total = consultas.reduce((a,c) => a+(Number(c.valor)||0), 0);
-  const comValor = consultas.filter(c => c.valor > 0);
-  const media = comValor.length ? total/comValor.length : 0;
-  const importadas = consultas.filter(c => c.importado).length;
-
-  const kpiHtml = `
-    <div class="kpi-box"><div class="kpi-val">R$ ${(total/1000).toFixed(0)}k</div><div class="kpi-lbl">Valor total</div></div>
-    <div class="kpi-box"><div class="kpi-val">R$ ${(media/1000).toFixed(1)}k</div><div class="kpi-lbl">Ticket médio</div></div>
-    <div class="kpi-box"><div class="kpi-val">${importadas}</div><div class="kpi-lbl">HiDoctor</div></div>`;
-
-  if (kpiSection) { kpiSection.style.display = 'block'; document.getElementById('kpi-row').innerHTML = kpiHtml; }
-  if (kpiDesktop) { kpiDesktop.style.display = 'grid'; kpiDesktop.innerHTML = kpiHtml; }
+  const temValor=consultas.some(c=>c.valor>0);
+  [document.getElementById('kpi-sect-sidebar'),document.getElementById('kpi-desktop')]
+    .forEach(el=>{ if(el) { el.style.display='none'; el.classList&&el.classList.remove('show'); } });
+  if(!temValor) return;
+  const total=consultas.reduce((a,c)=>a+(Number(c.valor)||0),0);
+  const comValor=consultas.filter(c=>c.valor>0);
+  const media=comValor.length?total/comValor.length:0;
+  const importadas=consultas.filter(c=>c.importado).length;
+  const kpiSb=document.getElementById('kpi-sidebar');
+  const kpiDk=document.getElementById('kpi-desktop');
+  const html=`
+    <div class="kpi"><div class="kpi-val">R$${(total/1000).toFixed(0)}k</div><div class="kpi-lbl">Total</div></div>
+    <div class="kpi"><div class="kpi-val">R$${(media/1000).toFixed(1)}k</div><div class="kpi-lbl">Ticket</div></div>
+    <div class="kpi"><div class="kpi-val">${importadas}</div><div class="kpi-lbl">HiDoctor</div></div>`;
+  if(kpiSb){ kpiSb.innerHTML=html; document.getElementById('kpi-sect-sidebar').style.display='block'; }
+  if(kpiDk){ kpiDk.innerHTML=html.replace(/class="kpi"/g,'class="kpi-card"').replace(/class="kpi-val"/g,'class="kpi-card-val"').replace(/class="kpi-lbl"/g,'class="kpi-card-lbl"'); kpiDk.classList.add('show'); }
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+function showEmptyState(id,icon,title,sub) {
+  const el=document.getElementById(id);
+  if(el) el.innerHTML=`<div class="empty-state"><div class="empty-icon">${icon}</div><div class="empty-title">${title}</div><div class="empty-sub">${sub}</div></div>`;
+}
+
+function showToast(msg, type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className=`toast toast-${type} show`;
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+function scrollToForm() {
+  document.getElementById('nome-input').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>document.getElementById('nome-input').focus(),400);
 }
 </script>
 </body>
