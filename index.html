@@ -507,6 +507,16 @@ input[type="date"]{cursor:pointer}
                 </select>
               </div>
             </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Valor pago</label>
+                <select id="valor-input">
+                  <option value="900">💳 R$ 900 — Particular</option>
+                  <option value="500">🏥 R$ 500 — UNIMED</option>
+                  <option value="0">— Não informado</option>
+                </select>
+              </div>
+            </div>
             <div>
               <div class="src-lbl">Origem do lead <span class="src-req">— selecione uma</span></div>
               <div class="src-cards">
@@ -773,7 +783,7 @@ async function registrar(){
   const btn=document.getElementById('btn-reg'),icon=document.getElementById('btn-icon');
   btn.disabled=true;icon.textContent='⏳';
   try{
-    await salvarConsulta({nome,telefone:tel||null,origem:srcSel,data_consulta:data,tipo});
+    await salvarConsulta({nome,telefone:tel||null,origem:srcSel,data_consulta:data,tipo,valor_pago:+document.getElementById('valor-input').value||null});
     document.getElementById('nome-input').value='';
     document.getElementById('tel-input').value='';
     document.getElementById('data-input').value='';
